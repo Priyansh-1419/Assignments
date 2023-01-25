@@ -1,1 +1,25 @@
 Assignment
+
+1. Select First Name, Product Name, Product Category, Loan Amount, Loan_Disbursal_Date, Repayment_Frequency from LMS CUSTOMER_MC inner join LMS AGREEMENT DTLA on C. customer_id = A.Lessee_id inner join LMS Product M P on A. Product Code = P. Product Code;
+
+2. Select First Name, AdviceDate, Txn_Advice_ID, Adviceamt, AdviceDate from LMS CUSTOMER_MC inner join LMS_Agreement DTLA on C. Customer_ID= A. Lessee_ID Inner join LMS_TXN_ADVICE DTL TA on A. Agreement_id=TA. Case_Id where Agreement id=LN_Home_101';
+
+3. Select from LMS_TXN_ADVICE_DTL TA inner join LMS Payment DTL PD on TA.
+
+Txn_Advice_id = PD. Txn_Advice_Id inner join LMS CHEQUE DTL CD on PD. Cheque_ID= CD.
+
+Cheque_id where Cheque_Num= '123456778';
+
+4. Select from LMS Customer M C Inner join LMS Agreement DTLA on C. Customer_ID=A Lessee ID Inner join LMS_Repaysch_Dtl RD on A. Agreement Id = RD. Agreement_Id inner Join LMS TXN_ADVICE DTL TD on RD. PropinstID= TD.TxnID inner join LMS Payment DTL PD on TA. Txn_Advice_id = PD, Txn_Advice_id where Agreement_ID='LN_Home_101';
+
+5. Select count (Payment Mode), sum(Cheque Amount) from LMS Agreement DTLA inner join LMS TXN ADVICE DTL TD on A. Agreement_id=TD.Case_Id inner join LMS Payment DTL PD on TD. Txn_Advice_id=PD. Txn Advice_Id inner join LMS CHEQUE DTL CD on PD. Cheque_ID= CD. Cheque_id where Agreement ID LN Home 101' group by Payment Mode having Payment_Mode = 'Cheque';
+
+6. Select count (Payment Mode), sum(Cheque Amount) from LMS Agreement DTLA inner join LMS TXN_ADVICE DTL TA on A. Agreement_id=TA.Case Id inner join LMS Payment DTL PD on TA. Txn_Advice_id= PD. Txn_Advice Id Inner join LMS CHEQUE DTL CD on PD. Cheque ID= CD. Cheque_id where Agreement_ID" LN_Home_101 group by Status having Status="B":
+
+7. Select countiPayment Mode), sum(Cheque Amount) from LMS Agreement DTLA inner join LMS TXN_ADVICE DTL TA on A. Agreement_id=TA.Case_id inner join LMS Payment DTL PD on TA Txn_Advice_id= PD. Txn_Advice_id inner join LMS CHEQUE DTL CD on PD. Cheque_ID=CD. Cheque id group by Payment Mode having
+
+Payment Mode in ('CQ)
+
+8. Select count (Installment Number] from LMS_Customer_MC inner join
+
+LMS Agreement OTL A on C. Customer_ID=A. Lessee ID inner join LMS Repaysch_Dti Ron A. Agreement Id R. Agreement id where Customer ID C105
