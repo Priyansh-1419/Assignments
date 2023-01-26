@@ -23,3 +23,99 @@ Payment Mode in ('CQ)
 8. Select count (Installment Number] from LMS_Customer_MC inner join
 
 LMS Agreement OTL A on C. Customer_ID=A. Lessee ID inner join LMS Repaysch_Dti Ron A. Agreement Id R. Agreement id where Customer ID C105
+
+
+
+
+
+
+Joins-----
+
+2) SELECT A.Agreement_ID, C.First Name, T.Txn_Advice ID, T.ADVICEDATE, P. Payment_ID, T.ADVICEAMT, P.Payment_Date
+
+FROM LMS AGREEMENT DTL_ABHAYMANGAL_16886 A
+
+JOIN LMS CUSTOMER_M_ABHAYMANGAL 16886 C ON A. lessee_id-C.Customer_Id
+
+JOIN LMS_TXN_ADVICE_DTL ABHAYMANGAL 16886 T ON T.CASE_ID=A.Agreement_ID JOIN LMS_PAYMENT_DTL_ABHAYMANGAL 16886 P ON P.Txn_Advice_ID=T. Txn_Advice_ID
+
+WHERE Agreement_ID='&AGR_ID';
+
+
+3) SELECT from LMS_TXN_ADVICE_DTL ABHAYMANGAL_16886 T JOIN LMS PAYMENT DTL ABHAYMANGAL 16886 P ON P.TXN_ADVICE_ID=T.Txn_Advice_id JOIN LMS CHEQUE DTL ABHAYMANGAL 16886 C ON P.CHEQUE ID-C.CHEQUE ID
+
+WHERE CHEQUE NUM= ' &CHEQUE_NUM';
+
+4) SELECT COUNT(*) FROM
+
+LMS AGREEMENT DTL_ABHAYMANGAL_16886 A JOIN IMS TXN_ADVICE_DTL ABHAYMANGAL 16886 T ON A.agreement_id=T.case_id JOIN IMS_PAYMENT_DTL_ARRAYMANGAL 16886 P ON t.Txn_Advice_idep.tx_advice_id
+
+WHERE A.Agreement_ID='&AGR_';
+
+5) SELECT COUNT(*), SUM(C. Cheque Amount) PROM
+
+LMS AGREEMENT DTL ABHAYMANGAL 16886 A JOIN LMS TXN_ADVICE DTL ABHAYMANGAL 16886 I ON a.agreement_id =t.case_id JOIN LMS_PAYMENT_DTL ABHAYMANGAL 16886 P CN t.txn_advice_id-p.txn_advice_id JOIN LMS CHEQUE DTL ABHAYMANGAL 16886 C ON p.cheque_id=c.cheque_id WHERE A. Agreement ID="GR_ID" AND c.Payment_Mode='C' OR c. Payment_Mode-'0'
+
+6) SELECT COUNT(*), SUM(C.Cheque Amount) LMS AGREEMENT DTL_ABHAYMANGAL_16886 A
+
+PROM
+
+JOIN IMS TXN_ADVICE_DTL ABHAYMANGAL 16886 T ON a.agreement_id -t.case_id
+
+JOIN LMS_PAYMENT_DTL ABHAYMANGAL 16886 P ON t.txn_advice_id=p.txn_advice_id JOIN LMS CHEQUE DTL_ABHAYMANGAL_16886 C ON p. cheque_id=c.cheque_id
+
+WHERE A.Agreement_ID LAGR_ID"
+
+AND c.status='B';
+
+7) SELECT COUNT(*), SUM(C. Cheque Amount) FROM LMS AGREEMENT DTL ABHAYMANGAL 16886 A JOIN LMS TXN_ADVICE_DTL_ABHAYMANGAL 16886 T ON a.agreement_id -t.case_id JOIN LMS_PAYMENT_DTL ABHAYMANGAL 16886 P ON t.txn_advice_id-p.txn_advice_id JOIN LMS CHEQUE DTL ABHAYMANGAL 16886 C ON p. cheque_id=c.cheque_id WHERE c. Payment Mode-'C' OR c. Payment Mode-'Q';
+
+8) SELECT
+
+c.customer_id, c.first_name, c.last_name, ag. lessee_id, ag.agreement id, ag.product_code, r.propinstId from LMS CUSTOMER_M_ABHAYMANGAL_16886 c
+
+Join LMS AGREEMENT DTL ABHAYMANGAL 16886 ag
+
+on c.customer_id= ag. lessee_id left outer JOIN LMS REPAYSCH_DTL_ABHAYMANGAL_16886 I
+
+on ag.agreement_id = r.agreement_id where r.propinstid IS NULL and customer_id='customer_id";
+
+9) SELECT C.First Name, P. Product Name, A. Loan Amount FROM IMS CUSTOMER_M_ABHAYMANGAL 16886 C JOIN LMS AGREEMENT DTL ABHAYMANGAL 16886 A ON A. Lessee_ID=C. Customer Id JOIN IMS PRODUCT M ABHAYMANGAL 16886 P ON P.Product_Code=a.product_code JOIN LMS_PRODUCT_CATEGORY_M_ABHAYMANGAL 16886 PC ON P.Product Category-PC.Category_ID WHERE PC.Asset_Based='Y';
+10)Select SUM(installment_amount) from LMS REPAYSCH_DTL_ABHAYMANGAL_16896 = where r.installment due date <= 'date';
+
+
+11) SELECT c.customer_id, c.first_name, c.last_name, a.lessee_id
+
+FROM LMS CUSTOMER_M_ABHAYMANGAL_16886 c
+
+JOIN LMS AGREEMENT DTL ABHAYMANGAL_16886 a ON c.Customer_Id=a.lessee_id
+
+JOIN LMS REPAYSCH_DTL ABHAYMANGAL_16886 R ON R.Agreement_ID=A.Agreement_ID JOIN LMS_TXN_ADVICE_DTL ABHAYMANGAL_16886 T ON A.Agreement_ID-T.Case_Id
+
+JOIN LMS PAYMENT DTL ABHAYMANGAL 16886 P ON T.Txn_Advice_id=P.Txn_Advice_id
+
+WHERE P.Payment_Date <-R. Installment Due_Date;
+
+12) select from LMS AGREEMENT DTL ABHAYMANGAL_16886;
+
+SELECT p.Product Name,p.Max_Tenure,p.Min_Tenure, pc. Asset Based, pc.securedloan
+
+from LMS_PRODUCT_M_ABHAYMANGAL_16886 p Join LMS AGREEMENT DTL ABHAYMANGAL 16886 a on p.product_code= a.product_code join LMS_PRODUCT_CATEGORY_M_ABHAYMANGAL 16886 pc on p.Product Category-pc.Category_ID where a.agreement_id='sagreement_id";
+
+13) select from LMS_REPAYSCH_DTL ABHAYMANGAL_16886;
+
+select from LMS AGREEMENT_DTL ABHAYMANGAL 16886 ag Join LMS REPAYSCH_DTL ABHAYMANGAL 16886 r on ag.Agreement_ID= r.Agreement_ID
+
+where r.PropInstID='PropInstID';
+
+14) select from LMS AGREEMENT DTL ABHAYMANGAL_16886;
+
+select Loan Amount, Installment Amount, Principal Component, Interest Component from LMS AGREEMENT DTL ABHAYMANGAL 16886 ag
+
+Join LMS REPAYSCH DTL ABHAYMANGAL 16886 r on ag. Agreement IDr.Agreement_ID
+
+where ag.Agreement_ID= 'Agreement_ID";
+
+15) Select from LMS_CUSTOMER_M_ABHAYMANGAL_16886 c join IMS AGREEMENT DTL ABHAYMANGAL 16886 a on c.customer_id=a.lessee_id where a.agreement_id like 'Home';
+
+
