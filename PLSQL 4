@@ -1,0 +1,113 @@
+ANSWER: 1
+CREATE OR REPLACE PROCEDURE SECURE_DML AS
+BEGIN
+  IF TO_CHAR(SYSDATE, 'MM') NOT IN ('03') THEN
+    RAISE_APPLICATION_ERROR(-20001, 'You can modify or add a department only at the end of a financial year');
+  END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TR_CHECK_DEPT
+BEFORE INSERT OR UPDATE OR DELETE ON dept
+BEGIN
+  SECURE_DML;
+END;
+/
+
+INSERT INTO dept (deptno, dname, loc) VALUES (50, 'TEST', 'TEST LOC');
+
+Note that this is just one example implementation in Oracle PL/SQL, the syntax and implementation may vary for different databases.
+
+ANSWER: 2
+
+CREATE OR REPLACE TRIGGER TR_CASCADE_CHANGE
+AFTER UPDATE OF deptno ON dept
+FOR EACH ROW
+BEGIN
+  UPDATE emp SET deptno = :new.deptno WHERE deptno = :old.deptno;
+END;
+/
+
+UPDATE dept SET deptno = 60 WHERE deptno = 10;
+
+Note that this is just one example implementation in Oracle PL/SQL, the syntax and implementation may vary for different databases
+
+ANSWER: 3
+
+CREATE OR REPLACE TRIGGER TR_CHECK_COMM
+BEFORE INSERT OR UPDATE OF job ON emp
+FOR EACH ROW
+BEGIN
+  IF :new.job = 'Salesman' THEN
+    IF :new.comm IS NULL THEN
+      :new.comm := 100;
+    END IF;
+  ELSE
+    :new.comm := NULL;
+  END IF;
+END;
+/
+
+INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) 
+VALUES (9999, 'TEST', 'Salesman', null, SYSDATE, 1000, null, 20);
+
+Note that this is just one example implementation in Oracle PL/SQL, the syntax and implementation may vary for different databases.
+
+ANSWER: 4
+
+CREATE OR REPLACE TRIGGER TR_VALIDATE_SAL
+BEFORE UPDATE OF sal ON emp
+FOR EACH ROW
+DECLARE
+  l_salgrade salgrade%ROWTYPE;
+BEGIN
+  SELECT * INTO l_salgrade
+  FROM salgrade
+  WHERE :new.sal BETWEEN losal AND hisal;
+
+  IF l_salgrade.losal IS NULL THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Salary not in the valid range');
+  END IF;
+END;
+/
+
+UPDATE emp SET sal = 9999 WHERE empno = 7369;
+
+Note that this is just one example implementation in Oracle PL/SQL, the syntax and implementation may vary for different databases.
+
+ANSWER: 5
+
+CREATE TABLE salaryLog (
+  empno NUMBER(4),
+  old_grade NUMBER(1),
+  new_grade NUMBER(1),
+  old_sal NUMBER(7,2),
+  new_sal NUMBER(7,2),
+  log_date DATE
+);
+
+CREATE OR REPLACE TRIGGER TR_CHECK_GRADE
+AFTER UPDATE OF sal ON emp
+FOR EACH ROW
+DECLARE
+  l_old_grade NUMBER;
+  l_new_grade NUMBER;
+BEGIN
+  SELECT grade INTO l_old_grade
+  FROM salgrade
+  WHERE :old.sal BETWEEN losal AND hisal;
+
+  SELECT grade INTO l_new_grade
+  FROM salgrade
+  WHERE :new.sal BETWEEN losal AND hisal;
+
+  IF l_old_grade != l_new_grade THEN
+    INSERT INTO salaryLog (empno, old_grade, new_grade, old_sal, new_sal, log_date)
+    VALUES (:new.empno, l_old_grade, l_new_grade, :old.sal, :new.sal, SYSDATE);
+  END IF;
+END;
+/
+
+UPDATE emp SET sal = 9999 WHERE empno = 7369;
+
+Note that this is just one example implementation in Oracle PL/SQL, the syntax and implementation may vary for different databases.
