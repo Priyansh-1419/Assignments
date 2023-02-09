@@ -1,0 +1,215 @@
+1.	Write a program which keeps track of the number of customer objects that are created and display the count in a method called display(). 
+
+
+    //Count Number of Object
+    public static int count = 0;
+    {
+        count++;
+    }
+    public void display(){
+        System.out.println(count);
+    }
+// combined with assignment 3
+
+ 
+  
+2.	Create the constructor as private in the Question – 1 of Day-2 and using the static method create only 3 instances of the Employee class. When user tries to create the fourth instance, it returns null.  
+ 
+  
+	
+package Assignment3;
+import Assignment2.Employee;
+
+public class Ques3 {
+    
+    private static int count = 0;
+    private static final int MAX_COUNT = 3;
+    private static Employee[] instances = new Employee[MAX_COUNT];
+
+    private void Employee(){
+        count++;
+    }
+    public static  Employee getInstance(){
+        if(count < MAX_COUNT){
+            instances[count] = new Employee();
+            return instances[count];
+        }
+        else{
+            return null;
+        }
+    }
+}
+
+// Combined with Assignment 3 Employee class
+
+
+3.	Create a class named 'PrintNumber' to print various numbers of different datatypes by creating different methods with the same name 'printn' having a parameter for each datatype. 
+
+package Assignment3;
+
+public class PrintNumber {
+
+        public void printn ( int num){
+            System.out.println(num);
+        }
+
+        public void printn ( float num){
+            System.out.println(num);
+        }
+
+        public void printn ( double num){
+            System.out.println(num);
+        }
+
+        public void printn ( long num){
+            System.out.println(num);
+        }
+    public static void main(String[] args) {
+            
+    }
+}
+ 
+4.	Create a class User with three data members which are name, age, and address. The constructor of the class assigns default values name as "unknown", age as '0' and address as "not available". It has two methods with the same name 'setInfo'. First method has two parameters for name and age and assigns the same whereas the second method takes has three parameters which are assigned to name, age, and address respectively. Print the name, age, and address of 10 users. 
+
+package Assignment3;
+
+public class User {
+    private String name;
+    private int age;
+    private String address;
+
+    public User() {
+        this.name = "unknown";
+        this.age = 0;
+        this.address = "not available";
+    }
+
+    public void setInfo(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public void setInfo(String name, int age, String address) {
+        this.name = name;
+        this.age = age;
+        this.address = address;
+    }
+
+    public static void main(String[] args) {
+        User[] users = new User[10];
+
+        for (int i = 0; i < 10; i++) {
+            users[i] = new User();
+            users[i].setInfo("User " + (i + 1), i + 20, "Address " + (i + 1));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Name: " + users[i].name);
+            System.out.println("Age: " + users[i].age);
+            System.out.println("Address: " + users[i].address);
+        }
+    }
+}
+
+
+5.	Given three strings S, S1, and S2 consisting of N, M, and K characters respectively, create a program to modify the string S by replacing all the substrings S1 with the string S2 in the string S. 
+
+package Assignment3;
+
+import java.util.Scanner;
+
+public class ReplaceString {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter a String S : ");
+        String S = input.nextLine();
+        System.out.println("Enter a String S1 : ");
+        String S1 = input.nextLine();
+        System.out.println("Enter a String S2 : ");
+        String S2 = input.nextLine();
+
+        String replacedString = S.replaceAll(S1, S2);
+        System.out.println("Replaced String is  : " + replacedString);
+    }
+}
+
+6.	Write a program to reverse String using the below three ways 
+a.	Using StringBuffer class 
+b.	Using StringBuilder class 
+c.	Using recursion 
+
+package Assignment3;
+
+import java.util.Scanner;
+
+public class ReverseString {
+    public static String reverseUsingRecursion(String s) {
+        if (s.length() <= 1) {
+            return s;
+        }
+        return reverseUsingRecursion(s.substring(1)) + s.charAt(0);
+    }
+
+        public static String reverseUsingStringBuilderClass(String str){ //Using StringBuilder Class
+            StringBuilder sb = new StringBuilder(str);
+            StringBuilder result =  sb.reverse();
+            return result.toString();
+        }
+        public static String reverseUsingStringBufferClass(String str){ //Using StringBuffer Class
+            StringBuffer sb = new StringBuffer(str);
+            StringBuffer result =  sb.reverse();
+            return result.toString();
+        }
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            System.out.print("Enter a String to Reverse : ");
+            String str = input.nextLine();
+            System.out.println(reverseUsingRecursion(str));
+            System.out.println(reverseUsingStringBuilderClass(str));
+            System.out.println(reverseUsingStringBufferClass(str));
+        }
+
+
+}
+ 
+7.	Make the variable – companyName of Customer class of Day2 assignment as final and then try to change it in constructor and then in method. Record your findings with the help of comments.  
+Answer: 7
+public class Customer {
+    private final String companyName;
+    private String customerName;
+
+    public Customer(String companyName) {
+        this.companyName = companyName;
+    }
+
+    // Try to change the companyName in constructor
+  /*
+  public Customer(String companyName) {
+    this.companyName = companyName;
+    this.companyName = "Nucleus Software"; // Error: cannot assign a value to final variable companyName
+  }
+  */
+
+    // Try to change the companyName in method
+  /*
+  public void setCompanyName(String companyName) {
+    this.companyName = companyName; // Error: cannot assign a value to final variable companyName
+  }
+  */
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    
+}
+
+
