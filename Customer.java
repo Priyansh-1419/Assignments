@@ -1,11 +1,15 @@
-package Assignment_2;
-import  Assignment_1.*;
+package assignment2;
+import assignment1.*;
 
 import java.util.Date;
 
 public class Customer {
+
     private int customerId;
     private String customerName;
+    public Customer(){
+        customerName = "Sourav";
+    }
     private Date dateOfBirth;
     private String contactNumber;
     private String emailAddress;
@@ -15,6 +19,8 @@ public class Customer {
     private double maxEligibleLoanAmount;
     private String designation;
     private String companyName;
+    private double interestRate;
+    public int tenure;
 
     public int getCustomerId() {
         return customerId;
@@ -104,7 +110,26 @@ public class Customer {
         this.companyName = companyName;
     }
 
+    //Count Number of Object
+    public static int count = 0;
+    {
+        count++;
+    }
+    public void display(){
+        System.out.println(count);
+    }
+
     //Calculate DBR
+    public double calculateDBR(){
+        return UtilitiesAll.calculateDBR(getTotalMonthlyExpenses(), getMonthlyIncome());
+    }
+    //Calculate Max ELigible EMI:
+    public double calculateMaxEligibleEMI(){
+        return UtilitiesAll.calculateMaxEligibleEMI(getMonthlyIncome());
+    }
 
-
+    //Calculate Eligible Loan Amount
+    public double calculateEligibleLoanAmount(){
+        return UtilitiesAll.calculateMaxLoanEligibility(getMonthlyIncome(), this.interestRate,this.tenure);
+    }
 }

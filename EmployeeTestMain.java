@@ -1,4 +1,4 @@
-package Assignment_2;
+package assignment2;
 
 public class EmployeeTestMain {
     public static void main(String[] args) {
@@ -18,6 +18,15 @@ public class EmployeeTestMain {
         // Test raiseSalary()
         System.out.println(e1.raiseSalary(10));
         System.out.println(e1);
+
+        Employee emp = Employee.getInstance();
+        Employee emp1 = Employee.getInstance();
+        Employee emp2 = Employee.getInstance();
+        Employee emp3 = Employee.getInstance();
+
+        if (emp3 == null){
+            System.out.println("Cannot Create more than 3 instances of Employee Class");
+        }
 
     }
 }

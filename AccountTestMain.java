@@ -1,4 +1,4 @@
-package Assignment_2;
+package assignment2;
 
 public class AccountTestMain {
     public static void main(String[] args) {
