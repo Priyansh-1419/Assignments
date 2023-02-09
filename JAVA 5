@@ -1,0 +1,375 @@
+ANSWER 1
+
+package Assignment5;
+
+public class ParentClass {
+    public void printParentMessage() {
+        System.out.println("This is parent class");
+    }
+}
+
+package Assignment5;
+
+public class ChildClass extends ParentClass {
+    public void printChildMessage() {
+        System.out.println("This is child class");
+    }
+}
+
+package Assignment5;
+
+public class Main {
+    public static void main(String[] args) {
+        ParentClass parentObject = new ParentClass();
+        ChildClass childObject = new ChildClass();
+
+        // Calling method of parent class by object of parent class
+        parentObject.printParentMessage();
+
+        // Calling method of child class by object of child class
+        childObject.printChildMessage();
+    }
+}
+
+
+ANSWER 2
+
+package Assignment5;
+
+public class ParentClass {
+    private void printParentMessage() {
+        System.out.println("This is parent class");
+    }
+}
+
+package Assignment5;
+
+public class ChildClass extends ParentClass {
+    public void printChildMessage() {
+        System.out.println("This is child class");
+    }
+}
+
+package Assignment5;
+
+public class Main {
+    public static void main(String[] args) {
+      //  ParentClass parentObject = new ParentClass();
+        ChildClass childObject = new ChildClass();
+
+        // Calling method of parent class by object of parent class
+       // parentObject.printParentMessage();  -> This will not execute as we define parent method private.
+
+        // Calling method of child class by object of child class
+        childObject.printChildMessage();
+    }
+}
+
+
+
+ANSWER 3
+
+package Assignment5;
+
+public class Grandparent {
+    public Grandparent() {
+        System.out.println("Inside Grandparent's constructor");
+    }
+}
+package Assignment5;
+
+public class Parent extends Grandparent {
+    public Parent() {
+        System.out.println("Inside Parent's constructor");
+    }
+}
+
+package Assignment5;
+
+public class Child extends Parent {
+    public Child() {
+        System.out.println("Inside Child's constructor");
+    }
+}
+
+package Assignment5;
+
+public class Multilevel {
+    public static void main(String[] args) {
+        Child child = new Child();
+    }
+}
+
+
+ANSWER 4
+
+package Assignment5;
+
+public class ParentClass {
+    private void printParentMessage() {
+        System.out.println("This is parent class");
+    }
+}
+
+package Assignment5;
+
+public class FirstSubclass extends ParentClass {
+    public void message() {
+        System.out.println("This is First Subclass");
+    }
+}
+
+package Assignment5;
+
+public class SecondSubclass extends ParentClass {
+    public void message() {
+        System.out.println("This is Second Subclass");
+    }
+}
+
+package Assignment5;
+
+public class Main {
+    public static void main(String[] args) {
+        FirstSubclass firstSubclassObject = new FirstSubclass();
+        SecondSubclass secondSubclassObject = new SecondSubclass();
+
+        firstSubclassObject.message();
+        secondSubclassObject.message();
+    }
+}
+
+
+
+ANSWER 5
+
+
+package Assignment5;
+abstract class ParentClass {
+    public abstract void message();
+    }
+
+class firstSubclass extends Parent {
+    public void message() {
+        System.out.println("This is First Subclass");
+    }
+}
+
+class secondSubclass extends Parent {
+    public void message() {
+        System.out.println("This is Second Subclass");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ParentClass firstSubclassObject = new firstSubclass();
+        ParentClass secondSubclassObject = new secondSubclass();
+
+        firstSubclassObject.message(); // This is First Subclass
+        secondSubclassObject.message(); // This is Second Subclass
+    }
+}
+
+
+ANSWER 6
+
+ package Assignment5;
+
+public class Person {
+    private String name;
+    private String address;
+    Person(){
+    }
+    Person(String name, String address){
+        this.name = name;
+        this.address = address;
+    }
+    public String getName() {
+        return name;
+    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String toString(){
+        return "Person[name = " + name + ", address = " + address + "]";
+    }
+}
+
+package Assignment5;
+
+public class Student extends Person{
+    private String program;
+    private int year;
+    private double fee;
+    Student(){
+    }
+    Student(String name, String address, String program,int year, double fee) {
+        super(name, address);
+        this.program = program;
+        this.year = year;
+        this.fee = fee;
+    }
+    public String getProgram() {
+        return program;
+    }
+    public void setProgram(String program) {
+        this.program = program;
+    }
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public double getFee() {
+        return fee;
+    }
+    
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
+    @Override
+    public String toString(){
+        return "Student[" + super.toString() +", program = " + getProgram() + ", year = " + getYear() + ", fee = " + getFee()+ "]";
+    }
+}
+
+package Assignment5;
+
+public class Staff extends Person{
+    private String school;
+    private double pay;
+    Staff(String name, String address, String school, double pay){
+        super(name, address);
+        this.school = school;
+        this.pay = pay;
+    }
+    public String getSchool() {
+        return school;
+    }
+    public void setSchool(String school) {
+        this.school = school;
+    }
+    public double getPay() {
+        return pay;
+    }
+    public void setPay(double pay) {
+        this.pay = pay;
+    }
+    @Override
+    public String toString(){
+        return "Staff[" + super.toString() + ", school=" + getSchool() + ", pay=" + getPay() + "]";
+    }
+}
+
+package Assignment5;
+
+public class PersonMain {
+    public static void main(String[] args) {
+        Person per = new Person("Priyansh_Rao", "Gorakhpur");
+        Student stu = new Student("Priyansh_Rao", "Gorakhpur","CSE", 4, 72600);
+        Staff sta = new Staff("Priyansh_Rao", "Gorakhpur", "LFS", 1000);
+        System.out.println(per);
+        System.out.println(stu);
+        System.out.println(sta);
+    }
+}
+
+
+
+ANSWER 7 & 8:
+
+package Assignment5;
+
+import Assignment1.Ques7;
+
+public abstract class LoanProduct{
+    private String loanProductCode;
+    private String loanProductName;
+    private boolean assetBased;
+    private String loanSecurityType;
+    private double minTenure;
+    private double maxTenure;
+    private double minLoanAmount;
+    private double maxLoanAmount;
+    private double roi;
+    private double ltv;
+ 
+    public abstract double LTVCalculationAsPerCollateralType(double LoanAmountAsked, double collateral);
+}
+
+package Assignment5;
+
+import Assignment1.Ques7;
+
+public class HomeLoan extends LoanProduct {
+    private String propertyType;
+    private String natureOfProperty;
+    private String propertyPurpose;
+    private String propertyOwnership;
+    private double marketValue;
+    private double builtUpArea;
+    private double carpetArea;
+    private double propertyAge;
+
+    @Override
+    public double LTVCalculationAsPerCollateralType(double LoanAmountAsked, double collateral) {
+        return Ques7.calculateLTV(LoanAmountAsked, collateral);
+    }
+}
+
+package Assignment5;
+
+import Assignment1.Ques7;
+
+public class ConsumerVehicleLoan extends LoanProduct {
+    private String assetCategory; // AssetCategory
+    private String assetVariant; // AssetVariant
+    private String assetModel;
+    private String manufacturer;
+    private int yearOfManufacture;
+    private double assetCost;
+    private double downPayment;
+
+    @Override
+    public double LTVCalculationAsPerCollateralType(double LoanAmountAsked, double collateral) {
+        return Ques7.calculateLTV(LoanAmountAsked, collateral);
+    }
+}
+
+package Assignment5;
+
+import Assignment1.Ques7;
+
+public class EducationLoan extends LoanProduct {
+    private String courseName;
+    private String collegeName;
+    private String courseType;
+    private String degreeType;
+    private String educationStream;
+    private double totalFees;
+
+    @Override
+    public double LTVCalculationAsPerCollateralType(double LoanAmountAsked, double collateral) {
+        return Ques7.calculateLTV(LoanAmountAsked, collateral);
+    }
+}
+
+package Assignment5;
+
+public class LoanMain {
+    public static void main(String[] args) {
+        LoanProduct homeLoan = new HomeLoan();
+        LoanProduct consumerLoan = new ConsumerVehicleLoan();
+        LoanProduct eduLoan = new EducationLoan();
+        System.out.println(homeLoan.LTVCalculationAsPerCollateralType(50000,175000));
+        System.out.println(consumerLoan.LTVCalculationAsPerCollateralType(50000,125000));
+        System.out.println(eduLoan.LTVCalculationAsPerCollateralType(125000,175000));
+    }
+}
