@@ -380,3 +380,20 @@ public class DataValidator {
 }
 
 
+public class DataValidationTester {
+
+    public static void main(String[] args) {
+        String customerId = "1234567890";
+        String customerName = "John Doe";
+        String email = "john.doe@example.com";
+
+        System.out.println("Is customer ID numeric? " + DataValidation.validateDataType(customerId, "Numeric"));
+        System.out.println("Is customer name alphanumeric? " + DataValidation.validateDataType(customerName, "Alphanumeric"));
+        System.out.println("Is customer ID length <= 10? " + DataValidation.validateDataLength(customerId, 10));
+        System.out.println("Does customer name contain restricted special characters? " + DataValidation.validateSpecialCharacters(customerName, "@#$%^"));
+        System.out.println("Is email in correct format? " + DataValidation.validateEmail(email));
+    }
+}
+
+
+
