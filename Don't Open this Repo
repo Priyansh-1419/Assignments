@@ -1,1 +1,382 @@
-nOTHING iS hERE
+1) 
+interface ConcatString {
+  String concat(String s1, String s2);
+}
+
+public static void main(String[] args) {
+  ConcatString concatString = (s1, s2) -> s1 + s2;
+  String result = concatString.concat("Hello", " World");
+  System.out.println(result);
+}
+
+This code defines the ConcatString interface with a single method concat that takes two String parameters and returns a concatenated String. In the main method, the interface is implemented as a lambda expression that takes two String parameters and returns their concatenation. Finally, the lambda expression is used to concatenate the strings "Hello" and " World" and the result is printed.
+
+2)
+
+import java.util.function.Predicate;
+
+public class Main {
+  public static void main(String[] args) {
+    Predicate<Integer> isDivisibleBy5 = n -> n % 5 == 0;
+    Predicate<Integer> isDivisibleBy2 = n -> n % 2 == 0;
+    Predicate<Integer> isDivisibleBy2And5 = isDivisibleBy2.and(isDivisibleBy5);
+    Predicate<Integer> isDivisibleBy2Or5 = isDivisibleBy2.or(isDivisibleBy5);
+    
+    int num = 20;
+    System.out.println("Is " + num + " divisible by 5? " + isDivisibleBy5.test(num));
+    System.out.println("Is " + num + " divisible by 2? " + isDivisibleBy2.test(num));
+    System.out.println("Is " + num + " divisible by both 2 and 5? " + isDivisibleBy2And5.test(num));
+    System.out.println("Is " + num + " divisible by 2 or 5? " + isDivisibleBy2Or5.test(num));
+  }
+}
+
+
+/*
+In this code, the Predicate interface is used to define four predicates: isDivisibleBy5, isDivisibleBy2, isDivisibleBy2And5, and isDivisibleBy2Or5. The first two predicates check whether a number is divisible by 5 or 2, respectively. The isDivisibleBy2And5 predicate combines the first two predicates using the and method, which returns a new predicate that returns true if both of the input predicates return true. The isDivisibleBy2Or5 predicate combines the first two predicates using the or method, which returns a new predicate that returns true if either of the input predicates return true.
+
+Finally, the code defines a number num and uses the predicates to test whether it is divisible by 5, 2, both, or either. The results are printed to the console.
+*/
+
+
+3)
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+class Customer {
+  private int id;
+  private String name;
+  private int age;
+  private double annualIncome;
+
+  public Customer(int id, String name, int age, double annualIncome) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+    this.annualIncome = annualIncome;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public double getAnnualIncome() {
+    return annualIncome;
+  }
+}
+
+interface FilterCustomers {
+  boolean test(Customer customer);
+}
+
+public class Main {
+  public static void main(String[] args) {
+    List<Customer> customers = new ArrayList<>();
+    customers.add(new Customer(1, "John", 25, 600000));
+    customers.add(new Customer(2, "Jane", 30, 650000));
+    customers.add(new Customer(3, "Jim", 35, 700000));
+    customers.add(new Customer(4, "Joan", 40, 750000));
+
+    FilterCustomers filter = customer -> customer.getAnnualIncome() / 12 > 50000;
+    Consumer<Customer> printCustomer = customer -> System.out.println("Customer: " + customer.getName());
+
+    System.out.println("Customers with monthly income greater than 5 lac:");
+    for (Customer customer : customers) {
+      if (filter.test(customer)) {
+        printCustomer.accept(customer);
+      }
+    }
+  }
+}
+
+/*
+In this code, a Customer class is defined with four instance variables: id, name, age, and annualIncome. An interface FilterCustomers is then defined, which has a single method test that takes a Customer object as input and returns a boolean indicating whether the customer passes the filter.
+
+A List of Customer objects is created and populated with four customers. A lambda expression that implements the FilterCustomers interface is then defined to filter out customers with a monthly income greater than 5 lac. Finally, a Consumer object is defined that prints the name of a customer.
+
+The filtered customers are then printed to the console.
+*/
+
+
+4)
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+class Customer {
+  private int age;
+  private String name;
+  private double monthlyIncome;
+  
+  public Customer(int age, String name, double monthlyIncome) {
+    this.age = age;
+    this.name = name;
+    this.monthlyIncome = monthlyIncome;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public double getMonthlyIncome() {
+    return monthlyIncome;
+  }
+}
+
+interface CustomerFilter {
+  boolean filter(Customer customer);
+}
+
+public class Main {
+  public static void main(String[] args) {
+    List<Customer> customers = new ArrayList<>();
+    customers.add(new Customer(20, "John", 70000.0));
+    customers.add(new Customer(22, "Jane", 80000.0));
+    customers.add(new Customer(24, "Jim", 60000.0));
+    customers.add(new Customer(26, "Jack", 90000.0));
+
+    System.out.println("Customers between the age of 18 and 25:");
+    printCustomers(customers, c -> c.getAge() >= 18 && c.getAge() <= 25);
+  }
+
+  private static void printCustomers(List<Customer> customers, CustomerFilter filter) {
+    for (Customer c : customers) {
+      if (filter.filter(c)) {
+        System.out.println("Name: " + c.getName() + ", Age: " + c.getAge() + 
+            ", Monthly Income: " + c.getMonthlyIncome());
+      }
+    }
+  }
+}
+
+/*
+This program defines a class Customer with three fields - age, name, and monthly income. It then defines a functional interface CustomerFilter with a single method filter that takes a Customer object as input and returns a boolean value.
+
+In the main method, an instance of ArrayList of Customer objects is created and some Customer objects are added to it. The printCustomers method is then called, passing the ArrayList of Customer objects and a lambda expression that implements the filter method of the CustomerFilter interface. The lambda expression checks whether a customer's age is between 18 and 25.
+
+The printCustomers method iterates through the list of customers and calls the filter method on each customer using the provided CustomerFilter instance (the lambda expression). If the filter method returns true, the customer's details are printed.
+*/
+
+
+5)
+import java.util.function.Predicate;
+
+class LoanAgreement {
+    private String loanAccountNumber;
+    private double loanAmount;
+    private String loanStatus;
+    private boolean emiPending;
+
+    public LoanAgreement(String loanAccountNumber, double loanAmount, String loanStatus, boolean emiPending) {
+        this.loanAccountNumber = loanAccountNumber;
+        this.loanAmount = loanAmount;
+        this.loanStatus = loanStatus;
+        this.emiPending = emiPending;
+    }
+
+    public String getLoanAccountNumber() {
+        return loanAccountNumber;
+    }
+
+    public double getLoanAmount() {
+        return loanAmount;
+    }
+
+    public String getLoanStatus() {
+        return loanStatus;
+    }
+
+    public boolean isEmiPending() {
+        return emiPending;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LoanAgreement[] loanAgreements = new LoanAgreement[]{
+            new LoanAgreement("LA0001", 100000, "Active", true),
+            new LoanAgreement("LA0002", 200000, "Inactive", false),
+            new LoanAgreement("LA0003", 300000, "Active", true),
+            new LoanAgreement("LA0004", 400000, "Active", false),
+            new LoanAgreement("LA0005", 500000, "Inactive", true)
+        };
+
+        Predicate<LoanAgreement> isActiveAndEmiPending = loan -> loan.getLoanStatus().equals("Active") && loan.isEmiPending();
+
+        System.out.println("Loan Accounts with Active status and pending EMI:");
+        for (LoanAgreement loan : loanAgreements) {
+            if (isActiveAndEmiPending.test(loan)) {
+                System.out.println("Loan Account Number: " + loan.getLoanAccountNumber());
+                System.out.println("Loan Amount: " + loan.getLoanAmount());
+            }
+        }
+    }
+}
+
+/*
+In the above program, we have created a class LoanAgreement which represents a loan agreement and its properties like loanAccountNumber, loanAmount, loanStatus, and emiPending.
+
+Next, we have created an array of LoanAgreement objects and used the Predicate functional interface to filter out all those loan agreements whose loanStatus is Active and emiPending is true.
+
+Finally, we have used a for loop to iterate over the filtered loan agreements and printed their loanAccountNumber and loanAmount.
+*/
+
+
+6)
+
+import java.util.function.Predicate;
+
+class LoanAgreement {
+    private String loanAccountNumber;
+    private double loanAmount;
+    private String loanStatus;
+    private boolean emiPending;
+
+    public LoanAgreement(String loanAccountNumber, double loanAmount, String loanStatus, boolean emiPending) {
+        this.loanAccountNumber = loanAccountNumber;
+        this.loanAmount = loanAmount;
+        this.loanStatus = loanStatus;
+        this.emiPending = emiPending;
+    }
+
+    public String getLoanAccountNumber() {
+        return loanAccountNumber;
+    }
+
+    public double getLoanAmount() {
+        return loanAmount;
+    }
+
+    public String getLoanStatus() {
+        return loanStatus;
+    }
+
+    public boolean isEmiPending() {
+        return emiPending;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LoanAgreement[] loanAgreements = new LoanAgreement[]{
+            new LoanAgreement("LA0001", 100000, "Active", true),
+            new LoanAgreement("LA0002", 200000, "Inactive", false),
+            new LoanAgreement("LA0003", 300000, "Active", true),
+            new LoanAgreement("LA0004", 400000, "Active", false),
+            new LoanAgreement("LA0005", 500000, "Inactive", true)
+        };
+
+        Predicate<LoanAgreement> isActiveAndEmiPending = loan -> loan.getLoanStatus().equals("Active") && loan.isEmiPending();
+
+        System.out.println("Loan Accounts with Active status and pending EMI:");
+        for (LoanAgreement loan : loanAgreements) {
+            if (isActiveAndEmiPending.test(loan)) {
+                System.out.println("Loan Account Number: " + loan.getLoanAccountNumber());
+                System.out.println("Loan Amount: " + loan.getLoanAmount());
+            }
+        }
+    }
+}
+
+
+
+
+
+
+BRD
+
+
+
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class DataValidator {
+    public static boolean isValidDataType(String value, String dataType) {
+        switch (dataType.toLowerCase()) {
+            case "numeric":
+                return isNumeric(value);
+            case "alphabetic":
+                return isAlphabetic(value);
+            case "alphanumeric":
+                return isAlphanumeric(value);
+            default:
+                return false;
+        }
+    }
+
+    private static boolean isNumeric(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isAlphabetic(String value) {
+        return value.matches("[a-zA-Z]+");
+    }
+
+    private static boolean isAlphanumeric(String value) {
+        return value.matches("[a-zA-Z0-9]+");
+    }
+
+    public static boolean isValidLength(String value, int maxLength) {
+        return value.length() <= maxLength;
+    }
+
+    public static boolean isValidSpecialChars(String value, String specialChars) {
+        for (char c : value.toCharArray()) {
+            if (specialChars.indexOf(c) != -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isValidDomainValue(String value, String[] validValues) {
+        for (String validValue : validValues) {
+            if (value.equals(validValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isValidFormat(String value, String format) {
+        try {
+            if (format.equals("dd/MM/yyyy")) {
+                return value.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$");
+            } else if (format.equals("MM/dd/yyyy")) {
+                return value.matches("^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/[0-9]{4}$");
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isValidEmail(String value) {
+        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(value);
+        return matcher.find();
+    }
+}
+
+
