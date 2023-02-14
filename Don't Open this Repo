@@ -302,10 +302,11 @@ BRD
 
 
 
+package org.example;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DataValidator {
+public class dataValidator {
     public static boolean isValidDataType(String value, String dataType) {
         switch (dataType.toLowerCase()) {
             case "numeric":
@@ -377,22 +378,7 @@ public class DataValidator {
         Matcher matcher = pattern.matcher(value);
         return matcher.find();
     }
-}
-
-
-public class DataValidationTester {
-
-    public static void main(String[] args) {
-        String customerId = "1234567890";
-        String customerName = "John Doe";
-        String email = "john.doe@example.com";
-
-        System.out.println("Is customer ID numeric? " + DataValidation.validateDataType(customerId, "Numeric"));
-        System.out.println("Is customer name alphanumeric? " + DataValidation.validateDataType(customerName, "Alphanumeric"));
-        System.out.println("Is customer ID length <= 10? " + DataValidation.validateDataLength(customerId, 10));
-        System.out.println("Does customer name contain restricted special characters? " + DataValidation.validateSpecialCharacters(customerName, "@#$%^"));
-        System.out.println("Is email in correct format? " + DataValidation.validateEmail(email));
-    }
+    
 }
 
 
