@@ -1,0 +1,97 @@
+
+Creating Java Singleton Objects
+
+
+Priyansh Rao
+What are the three different ways of creating Singleton Objects? Show a demo of all three.
+
+In software engineering, the Singleton pattern is a creational design pattern that restricts the instantiation of a class to one "single" instance. There are three different ways to create Singleton objects in Java:
+
+Eager Initialization Singleton Pattern
+Lazy Initialization Singleton Pattern
+Thread Safe Singleton Pattern
+Here's a demo of all three:
+
+Eager Initialization Singleton Pattern:
+This method initializes the Singleton instance at the time of class loading. Therefore, the instance is always created even if it is not used. This method is recommended when the Singleton object is not too heavy and its creation is not a performance issue.
+
+java
+Copy code
+public class EagerSingleton {
+
+    private static final EagerSingleton INSTANCE = new EagerSingleton();
+
+    private EagerSingleton() {}
+
+    public static EagerSingleton getInstance() {
+        return INSTANCE;
+    }
+}
+Lazy Initialization Singleton Pattern:
+In this method, the Singleton instance is created only when it is required. The getInstance() method checks if an instance is already created or not. If not, it creates a new instance.
+
+java
+Copy code
+public class LazySingleton {
+
+    private static LazySingleton instance;
+
+    private LazySingleton() {}
+
+    public static LazySingleton getInstance() {
+        if(instance == null) {
+            instance = new LazySingleton();
+        }
+        return instance;
+    }
+}
+Thread Safe Singleton Pattern:
+The above two methods can cause issues if multiple threads try to access the getInstance() method simultaneously. To make sure that only one instance is created even in a multi-threaded environment, we can use the Thread Safe Singleton pattern.
+
+java
+Copy code
+public class ThreadSafeSingleton {
+
+    private static ThreadSafeSingleton instance;
+
+    private ThreadSafeSingleton() {}
+
+    public static synchronized ThreadSafeSingleton getInstance() {
+        if(instance == null) {
+            instance = new ThreadSafeSingleton();
+        }
+        return instance;
+    }
+}
+In the above example, the getInstance() method is synchronized to ensure that only one thread can access it at a time. This pattern is recommended when the Singleton object is heavy or when its creation is a performance issue.
+
+Note: There are other ways to implement Singleton in Java, such as using Enum or using a Static Block.
+
+
+
+
+Priyansh Rao
+Find out which of the SOLID principles are used in Java API and which part of API. Explain the same citing the references in a pdf file.
+
+As a language, Java was designed to follow SOLID principles to make the code maintainable, scalable, and flexible. Here's how SOLID principles are used in Java API:
+
+Single Responsibility Principle (SRP):
+The Java API follows SRP in its classes and interfaces. Each class and interface has a single responsibility and does it well. For example, the java.io package has classes and interfaces for handling input and output, while the java.util package has classes and interfaces for handling collections and utility functions.
+
+Open-Closed Principle (OCP):
+The Java API uses the OCP in its design. The interfaces provided by the API are open for extension but closed for modification. Developers can implement new classes and interfaces that adhere to the existing interfaces without modifying the existing ones. For example, the java.util.List interface can be extended to create a new type of List, without modifying the existing List interface.
+
+Liskov Substitution Principle (LSP):
+The Java API adheres to the LSP principle in its design. The API provides many classes and interfaces that can be used interchangeably. For example, any class that implements the java.util.List interface can be used in place of a java.util.ArrayList.
+
+Interface Segregation Principle (ISP):
+The Java API follows the ISP by providing small and focused interfaces instead of large interfaces. For example, the java.util.Map interface has separate methods for getting the value, getting the keys, and checking if the map is empty. This approach allows clients to implement only the methods they need.
+
+Dependency Inversion Principle (DIP):
+The Java API follows DIP by using interfaces to abstract away implementation details. For example, the java.util.Collections class has many static methods that accept a Collection as an argument. This approach allows clients to use any implementation of the Collection interface without worrying about implementation details.
+
+You can find more information on how Java API adheres to SOLID principles in the following resources:
+
+"Java: Principles of Software Design" by Duke University, available on Coursera.
+"SOLID Principles in Java: A Guide for Beginners" by Baeldung.
+"SOLID Design Principles Explained: The Java World" by DZone.
