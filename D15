@@ -207,6 +207,126 @@ public class Main {
 }
 
 
-7
+8
+public class IncrementThread extends Thread {
+    private static int counter = 0;
+
+    @Override
+    public void run() {
+        synchronized (IncrementThread.class) {
+            counter++;
+            System.out.println("Thread " + Thread.currentThread().getName() + " incremented counter to " + counter);
+        }
+    }
+
+    public static void main(String[] args) {
+        int numThreads = 5;
+
+        for (int i = 0; i < numThreads; i++) {
+            new IncrementThread().start();
+        }
+    }
+}
+
+9
+public class DeadlockExample {
+    private static Object resource1 = new Object();
+    private static Object resource2 = new Object();
+
+    public static void main(String[] args) {
+        // Thread 1 tries to lock resource1 and then resource2
+        Thread t1 = new Thread(() -> {
+            synchronized (resource1) {
+                System.out.println("Thread 1: locked resource 1");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (resource2) {
+                    System.out.println("Thread 1: locked resource 2");
+                }
+            }
+        });
+
+        // Thread 2 tries to lock resource2 and then resource1
+        Thread t2 = new Thread(() -> {
+            synchronized (resource2) {
+                System.out.println("Thread 2: locked resource 2");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (resource1) {
+                    System.out.println("Thread 2: locked resource 1");
+                }
+            }
+        });
+
+        // Start both threads
+        t1.start();
+        t2.start();
+
+        // Wait for both threads to finish
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+10
+
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class AlternateFileReader {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader reader1 = new BufferedReader(new FileReader(args[0]));
+        BufferedReader reader2 = new BufferedReader(new FileReader(args[1]));
+
+        Thread thread1 = new Thread(new FilePrinter(reader1));
+        Thread thread2 = new Thread(new FilePrinter(reader2));
+
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+
+        reader1.close();
+        reader2.close();
+    }
+
+    static class FilePrinter implements Runnable {
+        private final BufferedReader reader;
+
+        FilePrinter(BufferedReader reader) {
+            this.reader = reader;
+        }
+
+        @Override
+        public void run() {
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    synchronized (System.out) {
+                        System.out.println(line);
+                        System.out.notify();
+                        System.out.wait();
+                    }
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
 
 
