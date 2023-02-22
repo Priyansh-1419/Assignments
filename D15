@@ -32,3 +32,51 @@ public class Main {
         thread.start();
     }
 }
+
+
+
+
+2
+
+public class HelloThread extends Thread {
+    @Override
+    public void run() {
+        while (true) {
+            System.out.println("Hello world");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+public class ByeThread implements Runnable {
+    @Override
+    public void run() {
+        while (true) {
+            System.out.println("Bye");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        HelloThread helloThread = new HelloThread();
+        ByeThread byeThread = new ByeThread();
+
+        helloThread.start();
+        Thread t = new Thread(byeThread);
+        t.start();
+    }
+}
+
+
+3
+
