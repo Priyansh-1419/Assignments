@@ -1,0 +1,25 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class TextFileParser {
+    public static void main(String[] args) {
+        String filePath = "C:/data/sample.txt"; // file path to read from
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) { // read file line by line
+                String[] columns = line.split("~"); // split line into columns by "~"
+                
+                // process each column here
+                for (String column : columns) {
+                    System.out.print(column + " "); // print each column
+                }
+                
+                System.out.println(); // move to the next line after all columns are printed
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
