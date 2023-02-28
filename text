@@ -1,3 +1,64 @@
+Problem Definition
+Write a program in java to read a file from the local machine and insert the records from the file in the
+customer master table. 
+The structure of the Customer Master table will be:
+Sr # Field Name Data Type Size Mandatory Validation
+1. Customer ID Number 10 Y Running sequence number
+2 Customer Code Alpha- Numeric 10 Y Primary Key
+3 Customer Name Alpha- Numeric 30 Y Can accept only a-z, A-Z and 0-9
+4 Customer Address 1 Alpha- Numeric 100 Y
+5 Customer Address 2 Alpha- Numeric 100 N
+6 Customer Pin Code Number 6 Y Numeric 6 characters, should not be
+less than 6 characters
+7 E-mail address Alpha- Numeric 100 Y Validate the e-mail address format
+8 Contact Number Number 20 N
+9 Primary Contact
+Person
+Alpha- Numeric 100 Y
+10 Record Status Alpha- Numeric 1 Y N- New, M- Modified, D- Deleted, A=
+Authorized, R-Rejected
+11 Active/Inactive Flag Alpha- Numeric 1 Y
+A – Active, I - Inactive
+12 Create Date Date Y
+13 Created By Alpha- Numeric 30 Y
+14 Modified Date Date N
+15 Modified By Alpha- Numeric 30 N
+16 Authorized Date Date N
+17 Authorized By Alpha- Numeric 30 N
+l The file will be in .txt format, The program should check the extension of the file before
+uploading the file.
+l Each field in the file will be separated with “~” character and two records will be separated with
+a new line character “\n”.
+l The file can have multiple records.
+l Following validations should be checked for each record before insertion into the table:
+1 Field length
+2 Field Data type
+3 Mandatory/Non-Mandatory
+4 Domain Value Check (if any)
+5 Special Character Validation
+6
+l Following parameter will be fetched from the System Parameter table.
+1 File Location – The physical location of the file on the computer.
+2 File Name – The name of the file to be uploaded
+3 Rejection Level – R - if Record Level rejection is followed.
+F – if File level rejection is followed.
+1
+l The program should handle the abrupt crash of the program. Commits and Rollbacks should be
+appropriately handled in case of program crash.
+l
+l The program should generate a report for the records in which any of the validation fails and also
+give details of the error occurred.
+l
+l Working of Rejection Level - The file or the record will depend on a system level parameter called
+Rejection Level:
+The Rejection Level can have following values:
+1. File Level (F) – If the rejection level is defined as File Level, complete file will be rejected
+and no record will be saved in the table.
+2. Record Level (R) – In case the rejection level is Record level rejection the system will
+insert the successful records in the customer master table and reject the error records.
+
+
+
 Nsbt01~Nsbt pvt Ltd~A-39,Noida~U.P.~201307~nsbt@nucleussoftware.com~9998065432~Chitralekha~N~A~13/Aug/2010~Nidhi~~~~
 Wipro01~Wipro pvt Ltd~A-12,Noida~U.P.~201307~wipro@gmail.com~9806543201~Naveen~N~A~13/Aug/2010~Rajeev~~~~
 Tcs01~Tcs pvt Ltd ~C-52,Mathura~U.P.~100445~tcs@hotmail.com~9980654321~Nitin~N~A~13/Aug/2010~Nishant~~~24/Aug/2010~Vaibhav
