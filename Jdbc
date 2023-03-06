@@ -1,0 +1,149 @@
+public class Employee {
+    private int employeeId;
+    private LocalDate dateOfBirth;
+    private String employeeName;
+    private String emailAddress;
+
+    public Employee(int employeeId, LocalDate dateOfBirth, String employeeName, String emailAddress) {
+        this.employeeId = employeeId;
+        this.dateOfBirth = dateOfBirth;
+        this.employeeName = employeeName;
+        this.emailAddress = emailAddress;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", dateOfBirth=" + dateOfBirth +
+                ", employeeName='" + employeeName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                '}';
+    }
+}
+
+
+
+
+
+CREATE TABLE employee (
+    employee_id INT PRIMARY KEY,
+    date_of_birth DATE,
+    employee_name VARCHAR(50),
+    email_address VARCHAR(50)
+);
+
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
+public class EmployeeJdbcDemo {
+
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase";
+        String username = "root";
+        String password = "password";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            List<Employee> employees = Arrays.asList(
+                    new Employee(1, LocalDate.of(1990, 1, 1), "John Doe", "johndoe@example.com"),
+                    new Employee(2, LocalDate.of(1995, 2, 2), "Jane Smith", "janesmith@example.com")
+            );
+
+            String insertSql = "INSERT INTO employee (employee_id, date_of_birth, employee_name, email_address) " +
+                    "VALUES (?, ?, ?, ?)";
+
+            PreparedStatement statement = connection.prepareStatement(insertSql);
+
+            for (Employee employee : employees) {
+                statement.setInt(1, employee.getEmployeeId());
+                statement.setDate(2, java.sql.Date.valueOf(employee.getDateOfBirth()));
+                statement.setString(3, employee.getEmployeeName());
+                statement.setString(4, employee.getEmailAddress());
+                statement.executeUpdate();
+            }
+
+            System.out.println("Employees inserted successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error occurred while connecting to database: " + e.getMessage());
+        }
+    }
+}
+
+
+
+
+
+2
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
+public class EmployeeDisplayDemo {
+
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase";
+        String username = "root";
+        String password = "password";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String selectSql = "SELECT * FROM employee";
+            PreparedStatement statement = connection.prepareStatement(selectSql);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int employeeId = resultSet.getInt("employee_id");
+                LocalDate dateOfBirth = resultSet.getDate("date_of_birth").toLocalDate();
+                String employeeName = resultSet.getString("employee_name");
+                String emailAddress = resultSet.getString("email_address");
+
+                Employee employee = new Employee(employeeId, dateOfBirth, employeeName, emailAddress);
+                System.out.println(employee);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error occurred while connecting to database: " + e.getMessage());
+        }
+    }
+}
