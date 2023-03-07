@@ -34,3 +34,84 @@ Hobbies String array Check box
 Location String Drop-down
 Generate customer id and password and return the same to the customer post 
 successful registration. 
+
+
+
+
+
+
+
+
+
+
+
+1. Create a form that accepts a name, password and pass it on to the servlet
+a. The receiving servlet should check the name and password against a hard coded 
+list of name-password pairs stored in a HashMap. 
+b. HashMap should be initialized with some dummy usernames and passwords in 
+the constructor/init method of the servlet.
+c. Servlet should return either 'Name/Password Match' or 'Name/Password Does 
+Not Match' back to client.
+
+Here is a sample HTML form that accepts a username and password and submits it to a servlet named LoginServlet:
+
+php
+Copy code
+<html>
+  <body>
+    <form action="LoginServlet" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
+The form has two input fields for username and password, respectively, and a submit button. When the user clicks the submit button, the form data is sent as an HTTP POST request to the LoginServlet.
+
+Here is a sample LoginServlet that checks the username and password against a hard-coded list of username-password pairs stored in a HashMap:
+
+java
+Copy code
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+
+public class LoginServlet extends HttpServlet {
+    
+    private Map<String, String> userCredentials;
+    
+    public void init() {
+        // Initialize the userCredentials HashMap with some dummy usernames and passwords
+        userCredentials = new HashMap<String, String>();
+        userCredentials.put("alice", "password123");
+        userCredentials.put("bob", "letmein");
+        userCredentials.put("charlie", "pa$$w0rd");
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Retrieve the username and password submitted from the form
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Check if the submitted username and password match any entries in the userCredentials HashMap
+        if (userCredentials.containsKey(username) && userCredentials.get(username).equals(password)) {
+            // If the username and password match, send a response indicating success
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<html><body><h2>Name/Password Match</h2></body></html>");
+        } else {
+            // If the username and password do not match, send a response indicating failure
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<html><body><h2>Name/Password Does Not Match</h2></body></html>");
+        }
+    }
+}
+The init() method initializes the userCredentials HashMap with some dummy username-password pairs. The doPost() method retrieves the submitted username and password from the request and checks if they match any entries in the userCredentials HashMap. If there is a match, the servlet sends a response indicating success. If there is no match, the servlet sends a response indicating failure.
+
+
+
+
