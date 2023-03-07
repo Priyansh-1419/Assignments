@@ -1,0 +1,27 @@
+
+Below are the things you need to create on sample html form: 
+1. Add an input field in form and on adding value in input field same value should get 
+displayed in a label field next to input field. 
+2. In second row, add drop down and add some values in drop down through jQuery and 
+on selection, value should get displayed in tooltip of element. 
+3. Add a date field next to drop down and its default value should be blank and on 
+selection text field in datepicker should be enabled but its corresponding datepicker area 
+where you can select date should get hide and on click of datepicker it should not get open(Use 
+jQuery). 
+4. In third row add a checkbox and two radio buttons (YES and NO) next to the checkbox in 
+second column. When checkbox get checked YES radio button get selected and when checkbox 
+get unchecked NO radio button gets selected. Similar handling is required on click of YES radio 
+button checkbox get checked and on click of NO radio button checkbox should get unchecked. 
+Only one radio should get selected at a time and default selected radio will be NO and 
+checkbox should be unchecked respectively. 
+5. Add a jQuery grid in the form and add two rows data through jQuery. In the grid 6 
+columns should be present and first column should be checkbox, second column should be link 
+and next all should be label fields. 
+On click of link, a modal should get open in which all fields should be text field in disabled mode 
+and there values should be equals to the value present in that row of the grid for particular 
+column. 
+Add textbox in third column using jQuery and set amount validation on it. Add selectbox in 4th 
+column and add some values in select box using jQuery. Add select box in 5th column whose list 
+of values should be dependent on the selection of 4th column select and on selection of value 
+in 5th column it should get disabled. On 6th column delete button should be present and on 
+click of the button, row should get deleted. 
