@@ -19,3 +19,166 @@ allow the page to be displayed printing all request headers, if not, it prints a
 message stating that the application is best suited for Google Chrome.
 9. Create a servlet so that it gets auto refreshed every 5 seconds and print the updated 
 time.
+
+
+
+
+
+
+
+
+
+
+1. Write an application to print “Hello World” using Servlet API. Do servlet-mapping in 
+web.xml and annotation both.
+
+To create a Servlet application that prints "Hello World," you can follow these steps:
+
+Create a new Dynamic Web Project in Eclipse or your preferred IDE.
+Add the Servlet API dependency to your project. If you are using Maven, you can add the following dependency to your pom.xml file:
+xml
+Copy code
+<dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>javax.servlet-api</artifactId>
+   <version>4.0.1</version>
+   <scope>provided</scope>
+</dependency>
+Create a new Servlet class by right-clicking on your project and selecting New > Servlet. Name your servlet "HelloWorldServlet" and make sure it is in a package, e.g. "com.example.servlets".
+Implement the doGet() method in your servlet, which will output "Hello World" to the response:
+java
+Copy code
+import java.io.IOException;
+import javax.servlet.http.*;
+
+public class HelloWorldServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        response.getWriter().println("<h1>Hello World</h1>");
+    }
+}
+Configure your servlet in the web.xml file by adding the following code:
+xml
+Copy code
+<servlet>
+    <servlet-name>HelloWorldServlet</servlet-name>
+    <servlet-class>com.example.servlets.HelloWorldServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>HelloWorldServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+</servlet-mapping>
+Alternatively, you can use annotations to map your servlet. In your servlet class, add the following annotation:
+java
+Copy code
+@WebServlet("/hello")
+public class HelloWorldServlet extends HttpServlet {
+    // ...
+}
+Run your application on a web server, and navigate to http://localhost:8080/yourapp/hello to see "Hello World" printed to the screen.
+
+
+
+Priyansh Rao
+2. In the same application, create a servlet to count the total number of hits.
+
+To create a servlet that counts the total number of hits, you can follow these steps:
+
+Create a new Servlet class by right-clicking on your project and selecting New > Servlet. Name your servlet "HitCounterServlet" and make sure it is in a package, e.g. "com.example.servlets".
+Implement the doGet() method in your servlet, which will increment a hit counter and output the total number of hits to the response:
+java
+Copy code
+import java.io.IOException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.*;
+
+public class HitCounterServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletContext context = getServletContext();
+        Integer hitCounter = (Integer) context.getAttribute("hitCounter");
+        if (hitCounter == null) {
+            hitCounter = 0;
+        }
+        hitCounter++;
+        context.setAttribute("hitCounter", hitCounter);
+        response.setContentType("text/html");
+        response.getWriter().println("<h1>Total hits: " + hitCounter + "</h1>");
+    }
+}
+Configure your servlet in the web.xml file by adding the following code:
+xml
+Copy code
+<servlet>
+    <servlet-name>HitCounterServlet</servlet-name>
+    <servlet-class>com.example.servlets.HitCounterServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>HitCounterServlet</servlet-name>
+    <url-pattern>/hitcount</url-pattern>
+</servlet-mapping>
+Alternatively, you can use annotations to map your servlet. In your servlet class, add the following annotation:
+java
+Copy code
+@WebServlet("/hitcount")
+public class HitCounterServlet extends HttpServlet {
+    // ...
+}
+Run your application on a web server, and navigate to http://localhost:8080/yourapp/hitcount to see the total number of hits incremented each time you refresh the page. The hit counter will be stored in the ServletContext, which is shared among all servlets in your web application.
+
+
+
+Priyansh Rao
+3. In the same application, create a servlet to identify difference between Servlet instance 
+variable and local variable
+
+In Java, instance variables are variables that belong to an object, while local variables are variables that are declared within a method or block of code. In the context of a Servlet, instance variables belong to the Servlet class, while local variables are declared within the doGet() or doPost() method.
+
+To create a Servlet that demonstrates the difference between instance variables and local variables, you can follow these steps:
+
+Create a new Servlet class by right-clicking on your project and selecting New > Servlet. Name your servlet "VariableDemoServlet" and make sure it is in a package, e.g. "com.example.servlets".
+Declare an instance variable in your servlet class:
+java
+Copy code
+import java.io.IOException;
+import javax.servlet.http.*;
+
+public class VariableDemoServlet extends HttpServlet {
+    private int instanceVariable = 0;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int localVariable = 0;
+        instanceVariable++;
+        localVariable++;
+        response.setContentType("text/html");
+        response.getWriter().println("<h1>Instance variable value: " + instanceVariable + "</h1>");
+        response.getWriter().println("<h1>Local variable value: " + localVariable + "</h1>");
+    }
+}
+In the doGet() method, declare a local variable and increment both the instance variable and the local variable. Output the values of both variables to the response.
+Configure your servlet in the web.xml file by adding the following code:
+xml
+Copy code
+<servlet>
+    <servlet-name>VariableDemoServlet</servlet-name>
+    <servlet-class>com.example.servlets.VariableDemoServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>VariableDemoServlet</servlet-name>
+    <url-pattern>/variabledemo</url-pattern>
+</servlet-mapping>
+Alternatively, you can use annotations to map your servlet. In your servlet class, add the following annotation:
+java
+Copy code
+@WebServlet("/variabledemo")
+public class VariableDemoServlet extends HttpServlet {
+    // ...
+}
+Run your application on a web server, and navigate to http://localhost:8080/yourapp/variabledemo to see the difference between instance variables and local variables. The instance variable will be incremented each time you refresh the page, while the local variable will always be set to 1. This is because the local variable is declared within the doGet() method and is recreated each time the method is called, while the instance variable belongs to the Servlet class and persists between requests.
+
+
+
+
+
