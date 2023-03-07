@@ -29,3 +29,82 @@ a. Apply for Loan. Fields which need to be available are mentioned as below:
 Store the record in the database. After storing the record, return the 
 LoanApplicationNumber to the applicant, which must be auto-generated in the 
 application.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Create servlet that displays the number of visits by a user using the session tracking. 
+Also, display the session id and other details of the session object.
+
+To create a servlet that displays the number of visits by a user using session tracking, we can follow these steps:
+
+Create a new Java class and extend it with HttpServlet.
+Override the doGet method to handle HTTP GET requests.
+Get the HttpSession object using the getSession method of the HttpServletRequest object.
+Get the value of the visitCount attribute from the session object. If the attribute does not exist, set its value to 1.
+Increment the value of the visitCount attribute.
+Set the visitCount attribute back to the session object.
+Get the session ID using the getId method of the HttpSession object.
+Write the response to the client, including the session ID, visit count, and any other details of the session object that you want to display.
+Here's an example implementation of the servlet:
+
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+
+public class VisitCounterServlet extends HttpServlet {
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the session object
+        HttpSession session = request.getSession();
+
+        // Get the visit count from the session object
+        Integer visitCount = (Integer) session.getAttribute("visitCount");
+        if (visitCount == null) {
+            visitCount = 1;
+        } else {
+            visitCount++;
+        }
+
+        // Set the visit count back to the session object
+        session.setAttribute("visitCount", visitCount);
+
+        // Get the session ID
+        String sessionId = session.getId();
+
+        // Write the response to the client
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<html><head><title>Visit Counter Servlet</title></head>");
+        out.println("<body>");
+        out.println("<h1>Visit Counter Servlet</h1>");
+        out.println("<p>You have visited this page " + visitCount + " times.</p>");
+        out.println("<p>Your session ID is " + sessionId + ".</p>");
+        out.println("<p>Other details of the session object:</p>");
+        out.println("<ul>");
+        out.println("<li>Creation Time: " + session.getCreationTime() + "</li>");
+        out.println("<li>Last Accessed Time: " + session.getLastAccessedTime() + "</li>");
+        out.println("<li>Max Inactive Interval: " + session.getMaxInactiveInterval() + " seconds</li>");
+        out.println("</ul>");
+        out.println("</body></html>");
+    }
+}
+
+
+
+
+In this example, we're storing the visitCount attribute in the session object and incrementing it each time the user visits the page. We're also displaying the session ID and some other details of the session object, such as its creation time, last accessed time, and maximum inactive interval.
