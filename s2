@@ -1,0 +1,36 @@
+
+1. Create a form that accepts a name, password and pass it on to the servlet
+a. The receiving servlet should check the name and password against a hard coded 
+list of name-password pairs stored in a HashMap. 
+b. HashMap should be initialized with some dummy usernames and passwords in 
+the constructor/init method of the servlet.
+c. Servlet should return either 'Name/Password Match' or 'Name/Password Does 
+Not Match' back to client.
+2. In the above Question, use forward and redirect. If the username and password is 
+correct, set a request attribute named “message” and the value for the same is 
+“'Name/Password Match”. Forward the request using RequestDispatcher forward() 
+method to another servlet and print all three values there – Username and password 
+entered by user and the ‘message’ attribute. 
+If the password is incorrect, redirect the request to an error page using 
+ServletResponse.sendRedirect()
+3. In the above question, replace sendRedirect() method with sendError() method. 
+4. Write a servlet that redirects requests form one host to another host, giving an 
+explanation to the client before the redirection. As we generally see during payment 
+and request will be redirected to bank website.
+5. Create a servlet that displays the servlet config and servlet context parameters. For this 
+purpose, you can create more than one servlet.
+6. Map error-code ‘404’ with an underconstruction.html page. Whenever 404 error occurs, 
+instead of showing the default error page, it shows ‘underconstruction.html’ page.
+7. Map java.lang.Exception with an ErrorServlet. 
+8. Create a Customer Registration Form with the below mentioned fields:
+Name Data Type Screen Object
+Customer Name String Text field
+Date of Birth LocalDate Date
+Email Address String Text field
+Contact Number String Text field
+Monthly Salary Double Text field
+Gender Char Radio Button
+Hobbies String array Check box
+Location String Drop-down
+Generate customer id and password and return the same to the customer post 
+successful registration. 
