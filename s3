@@ -1,0 +1,31 @@
+
+1. Create servlet that displays the number of visits by a user using the session tracking. 
+Also, display the session id and other details of the session object.
+2. The Customer logins with his/her credentials, maintain the login and logout for the 
+customer. Demonstrate the effect of session timeout in the application. 
+3. Write a servlet application to implement the feature of “keep me sign in” while login. 
+a. If user signs in with “Keep me signed in” option, a cookie is created on the User’s 
+browser. From this cookie web application can identify the user and let him use 
+the system.
+b. Whenever user comes back to the site, if he is authenticated using cookie a new 
+cookie is created and stored in his machine, so that cookie expiration time is also 
+moved out.
+4. Create a servlet that displays all the cookies in a tabular form, if they exist. Otherwise, 
+display the message “No Cookie”
+5. In case the cookies are disabled in Client’s browser, recreate the Question-3 with the 
+help of URL encoding. 
+6. Create a Loan Application to perform the below:
+a. Apply for Loan. Fields which need to be available are mentioned as below: 
+(a) Applicant Name 
+(b) Applicant email id 
+(c) Contact Number 
+(d) Loan Type (Drop-Down) 
+(e) Loan Tenure 
+(f) Reason for Loan 
+(g) Salary Details 
+(i) Organization Name 
+(ii) Designation 
+(iii) Monthly Salary 
+Store the record in the database. After storing the record, return the 
+LoanApplicationNumber to the applicant, which must be auto-generated in the 
+application.
