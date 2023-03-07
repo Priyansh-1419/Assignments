@@ -1,0 +1,21 @@
+
+1. Write an application to print “Hello World” using Servlet API. Do servlet-mapping in 
+web.xml and annotation both.
+2. In the same application, create a servlet to count the total number of hits.
+3. In the same application, create a servlet to identify difference between Servlet instance 
+variable and local variable
+4. Provide the hyperlink to the servlet in HTML and pass the username in the link. On click 
+of that hyperlink Servlet will get the username passed in the link and will greet(Good 
+morning/afternoon/evening/night)the user with their name based on time of the day.
+5. In the same application create a demo of Servlet life cycle. Check for how many times 
+init() and destroy() method have been called and at what time during the application 
+execution. Record your finding in terms of comments.
+6. Create a Servlet to print the request headers. 
+7. Create an HTML form that contains text fields, text area, radio buttons, drop-down list, 
+checkboxes, and date. Also, create two different servlets to display the values entered 
+by the user using the GET and POST methods.
+8. Use user-agent header to identify the browser being used by the user. If it is Chrome, 
+allow the page to be displayed printing all request headers, if not, it prints an error 
+message stating that the application is best suited for Google Chrome.
+9. Create a servlet so that it gets auto refreshed every 5 seconds and print the updated 
+time.
