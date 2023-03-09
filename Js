@@ -1,0 +1,8 @@
+a. All fields marked with (*) are mandatory 
+b. Date of Birth should be in the format of DD-MM-YYYY 
+c. The House Number should be numeric only. 
+d. First Name and Last Name must be alphabets only and contains minimum 3 characters. 
+e. Total Work Experience must be positive number only and minimum value is 0. 
+f. Based on the country being selected in the drop-down, the state drop-down shows the 
+corresponding states and when a state is selected, the city drop-down shows the 
+corresponding cities
