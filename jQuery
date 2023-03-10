@@ -1,4 +1,5 @@
 
+
 Below are the things you need to create on sample html form: 
 1. Add an input field in form and on adding value in input field same value should get 
 displayed in a label field next to input field. 
@@ -302,3 +303,32 @@ To delete a row on click of the delete button in the sixth column, you can use t
 
 
 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sample Form</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#myDropdown").change(function() {
+				var selectedValue = $(this).val();
+				$("#myInput").attr("title", selectedValue);
+			});
+		});
+	</script>
+</head>
+<body>
+	<form>
+		<label for="myInput">Enter some text:</label>
+		<input type="text" id="myInput" name="myInput"><br><br>
+
+		<label for="myDropdown">Select an option:</label>
+		<select id="myDropdown">
+			<option value="">--Select--</option>
+			<option value="Option 1">Option 1</option>
+			<option value="Option 2">Option 2</option>
+			<option value="Option 3">Option 3</option>
+		</select>
+	</form>
+</body>
+</html>
