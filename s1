@@ -182,3 +182,33 @@ Run your application on a web server, and navigate to http://localhost:8080/your
 
 
 
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class RequestHeadersServlet extends HttpServlet {
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Request Headers Servlet</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Request Headers</h1>");
+
+        // get all header names
+        java.util.Enumeration headerNames = request.getHeaderNames();
+        while(headerNames.hasMoreElements()) {
+            String headerName = (String)headerNames.nextElement();
+            out.println("<p>" + headerName + ": " + request.getHeader(headerName) + "</p>");
+        }
+
+        out.println("</body>");
+        out.println("</html>");
+    }
+}
