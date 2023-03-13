@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration Form</title>
+    <script>
+        // Javascript validation for email
+        function validateEmail(email) {
+            var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return regex.test(email);
+        }
+        
+        // Javascript validation for password
+        function validatePassword(password) {
+            var regex = /^.{6,}$/;
+            return regex.test(password);
+        }
+        
+        // Javascript validation for form submission
+        function validateForm() {
+            var firstName = document.forms["userForm"]["firstName"].value;
+            var lastName = document.forms["userForm"]["lastName"].value;
+            var username = document.forms["userForm"]["username"].value;
+            var password = document.forms["userForm"]["password"].value;
+            var confirmPassword = document.forms["userForm"]["confirmPassword"].value;
+            var address = document.forms["userForm"]["address"].value;
+            var email = document.forms["userForm"]["email"].value;
+            
+            if (firstName == "") {
+                alert("First name must be filled out");
+                return false;
+            }
+            
+            if (lastName == "") {
+                alert("Last name must be filled out");
+                return false;
+            }
+            
+            if (username == "") {
+                alert("Username must be filled out");
+                return false;
+            }
+            
+            if (password == "") {
+                alert("Password must be filled out");
+                return false;
+            }
+            
+            if (confirmPassword == "") {
+                alert("Confirm password must be filled out");
+                return false;
+            }
+            
+            if (password != confirmPassword) {
+                alert("Passwords do not match");
+                return false;
+            }
+            
+            if (!validatePassword(password)) {
+                alert("Password must be at least 6 characters");
+                return false;
+            }
+            
+            if (address == "") {
+                alert("Address must be filled out");
+                return false;
+            }
+            
+            if (email == "") {
+                alert("Email must be filled out");
+                return false;
+            }
+            
+            if (!validateEmail(email)) {
+                alert("Invalid email format");
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>User Registration Form</h1>
+    <form name="userForm" action="addUserServlet" method="post" onsubmit="return validateForm()">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+        
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required><br><br>
+        
+        <label for
