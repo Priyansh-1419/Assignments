@@ -332,3 +332,35 @@ To delete a row on click of the delete button in the sixth column, you can use t
 	</form>
 </body>
 </html>
+
+
+
+
+
+
+<div class="row">
+  <label for="select">Select:</label>
+  <select id="select">
+    <option value="">--Select--</option>
+  </select>
+  <span class="tooltip"></span>
+</div>
+
+
+
+$(document).ready(function() {
+  // Add values to dropdown
+  var dropdownValues = ["Option 1", "Option 2", "Option 3"];
+  var $select = $('#select');
+  $.each(dropdownValues, function(index, value) {
+    $select.append($('<option>').text(value).attr('value', value));
+  });
+  
+  // Show tooltip on select change
+  $select.change(function() {
+    var selectedValue = $(this).val();
+    $('.tooltip').text(selectedValue);
+  });
+});
+
+
