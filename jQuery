@@ -364,3 +364,47 @@ $(document).ready(function() {
 });
 
 
+<div class="row">
+  <label for="dropdown">Dropdown:</label>
+  <select id="dropdown">
+    <option value="">--Select--</option>
+    <option value="Option 1">Option 1</option>
+    <option value="Option 2">Option 2</option>
+    <option value="Option 3">Option 3</option>
+  </select>
+</div>
+<div class="row">
+  <label for="date">Date:</label>
+  <input type="text" id="date">
+</div>
+
+
+
+
+$(document).ready(function() {
+  // Initialize datepicker
+  $('#date').datepicker({
+    dateFormat: 'mm/dd/yy',
+    showOn: 'button',
+    buttonImage: 'https://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+    buttonImageOnly: true,
+    buttonText: 'Select Date'
+  });
+  
+  // Hide datepicker area by default
+  $('.ui-datepicker-calendar').hide();
+  
+  // Enable date input on dropdown change
+  $('#dropdown').change(function() {
+    $('#date').prop('disabled', false);
+    $('.ui-datepicker-trigger').click(function() {
+      return false;
+    });
+  });
+});
+
+
+
+
+
+
