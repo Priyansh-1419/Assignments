@@ -162,7 +162,49 @@ public class WelcomeServlet extends HttpServlet {
 
 
 
+@WebServlet("/login")
 
+public class LoginServlet extends HttpServlet {
+
+  
+
+  private static final String USERNAME = "admin";
+
+  private static final String PASSWORD = "password";
+
+  
+
+  @Override
+
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+      throws ServletException, IOException {
+
+    
+
+    String username = request.getParameter("username");
+
+    String password = request.getParameter("password");
+
+    
+
+    if (username.equals(USERNAME) && password.equals(PASSWORD)) {
+
+      request.setAttribute("message", "Name/Password Match");
+
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/welcome");
+
+      dispatcher.forward(request, response);
+
+    } else {
+
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Incorrect username or password");
+
+    }
+
+  }
+
+}
 
 
 
