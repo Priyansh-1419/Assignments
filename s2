@@ -304,6 +304,23 @@ public class ContextServlet extends HttpServlet {
   </error-page>
 </web-app>
 
+@WebServlet("/error")
+public class ErrorServlet extends HttpServlet {
+
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    
+    // Get the exception object from the request
+    Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+    
+    // Write the error message to the response
+    PrintWriter out = response.getWriter();
+    out.println("<html><body>");
+    out.println("<h2>Error Message</h2>");
+    out.println("<p>" + throwable.getMessage() + "</p>");
+    out.println("</body></html>");
+  }
+}
 
 
 
