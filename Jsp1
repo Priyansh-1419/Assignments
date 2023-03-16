@@ -146,3 +146,287 @@ Sum of <%= num1 %> and <%= num2 %> is <%= result %>
 
 
 
+<%@ page language="java" %>
+
+<%
+   int sum(int num1, int num2) {
+      return num1 + num2;
+   }
+%>
+
+<html>
+<head>
+<title>Print to Console using JSP Elements</title>
+</head>
+<body>
+
+<%
+   int num1 = 3;
+   int num2 = 4;
+   int result = sum(num1,num2);
+   System.out.println("Sum of " + num1 + " and " + num2 + " is " + result);
+%>
+
+Sum of <%= num1 %> and <%= num2 %> is <%= result %>
+
+</body>
+</html>
+
+
+
+Sure, here are the steps to deploy the JSP project into Tomcat and compare the source JSP with the generated servlet:
+
+Create a new JSP file with the code from the previous examples, and save it as sum.jsp in the Tomcat webapps directory.
+
+Start Tomcat server and access the JSP page by visiting http://localhost:8080/sum.jsp.
+
+After the JSP page is accessed, Tomcat will generate a servlet from the JSP page and store it in the work directory of Tomcat.
+
+To find the generated servlet, navigate to the Tomcat work directory (usually located in the work folder of the Tomcat installation directory).
+
+In the work directory, find the generated
+
+servlet corresponding to the sum.jsp page. The servlet should have a name like org.apache.jsp.sum_jsp.
+
+Compare the source code of the sum.jsp file with the generated servlet to see how Tomcat has translated the JSP code into a servlet. You should see that the JSP scriptlet code has been converted into Java code, and that the JSP expression language has been translated into Java print statements.
+
+You can make changes to the JSP file and redeploy it by restarting the Tomcat server. Tomcat will regenerate the servlet from the updated JSP file when the page is accessed again.
+
+
+
+
+
+<%@ page language="java" %>
+<html>
+<head>
+<title>Print Current Date and Time using JSP Expressions</title>
+</head>
+<body>
+
+The current date and time is <%= new java.util.Date() %>
+
+</body>
+</html>
+
+
+
+
+
+<%@ page language="java" %>
+<html>
+<head>
+<title>Print Factorials of n Numbers in a Tabular Form using JSP</title>
+</head>
+<body>
+
+<%
+   int n = 5; // Change this value to set the number of rows in the table
+   
+   // Define a method to calculate the factorial of a given number
+   long factorial(int num) {
+      long result = 1;
+      for (int i = 2; i <= num; i++) {
+         result *= i;
+      }
+      return result;
+   }
+%>
+
+<table border="1">
+<tr>
+<th>Number</th>
+<th>
+
+
+
+
+
+<%@ page language="java" %>
+<html>
+<head>
+<title>Movie Ticket Prices</title>
+</head>
+<body>
+
+<h2>Enter Your Information</h2>
+<form method="post" action="movie.jsp">
+<p>Name: <input type="text" name="name"></p>
+<p>Age: <input type="text" name="age"></p>
+<input type="submit" value="Submit">
+</form>
+
+<%
+   String name = request.getParameter("name");
+   int age = Integer.parseInt(request.getParameter("age"));
+
+   double ticketPrice;
+   String message;
+
+   if (age > 62) {
+      ticketPrice = 7.00;
+      message = "Senior discount applied!";
+   } else if (age < 10) {
+      ticketPrice = 5.00;
+      message = "Child discount applied!";
+   } else {
+      ticketPrice = 9.50;
+      message = "No discount applied.";
+   }
+
+   // Echo back the user's name, age, and the price of the movie ticket
+   out.println("<p>Hello " + name + ", your age is " + age + ".</p>");
+   out.println("<p>" + message + " The price of the movie ticket is $" + ticketPrice + ".</p>");
+%>
+
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Ticket Price Calculator</title>
+</head>
+<body>
+	<h1>Enter Your Details</h1>
+	<form action="movie.jsp" method="POST">
+		Name: <input type="text" name="name"><br><br>
+		Age: <input type="number" name="age"><br><br>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Ticket Price Calculator</title>
+</head>
+<body>
+	<h1>Movie Ticket Price Calculator</h1>
+	<%
+		String name = request.getParameter("name");
+		int age = Integer.parseInt(request.getParameter("age"));
+		double ticketPrice = 0.0;
+		
+		if(age > 62) {
+			ticketPrice = 7.00;
+		} else if(age < 10) {
+			ticketPrice = 5.00;
+		} else {
+			ticketPrice = 9.50;
+		}
+	%>
+	<p>Dear <%= name %>, your age is <%= age %>.</p>
+	<p>The ticket price for you is $<%= ticketPrice %> USD.</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Selector</title>
+</head>
+<body>
+	<h1>Select a Page</h1>
+	<form method="post" action="PageSelectorServlet">
+		<label for="page">Enter a page number (1 for About Us, 2 for Contact Us):</label>
+		<input type="text" id="page" name="page">
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
+
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class PageSelectorServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int page = Integer.parseInt(request.getParameter("page"));
+		
+		switch(page) {
+			case 1:
+				request.getRequestDispatcher("AboutUs.jsp").forward(request, response);
+				break;
+			case 2:
+				request.getRequestDispatcher("ContactUs.jsp").forward(request, response);
+				break;
+			default:
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
+	}
+}
+
+
+
+
+
+
+<!-- AboutUs.jsp -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>About Us</title>
+</head>
+<body>
+	<h1>About Us</h1>
+	<p>We are a company that does amazing things.</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- error.jsp -->
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>Error</title></head>
+
+<body>
+
+	<h1>Error</h1>
+
+	<p>Invalid page number entered.</p>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
