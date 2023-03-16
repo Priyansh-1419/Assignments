@@ -1,0 +1,57 @@
+
+1. Do the following with only JSPs (and no servlets) and using JSP scripting elements:
+a. Create a method that take two int numbers and return their sum as int.
+b. Invoke the method from within template text using JSP elements (example 
+o/p - Sum of 3 and 4 is 7.)
+c. Print above line to console as well using JSP elements.
+Deploy the project into tomcat, restart server and compare the source jsp with the 
+generated servlet.
+2. Write a program in JSP that prints the current date and time using JSP expressions. 
+3. Write a program in JSP that prints n numbers and their factorials in a tabular form. 
+Also, get the value of n from the user using the GET method.
+4. Write a JSP that takes the user’s name and age from a form. 
+a. Echo back the name and age along with a message stating the price of movie 
+tickets. 
+b. The price is determined by the age passed to the JSP. 
+c. If the age is greater than 62, the movie ticket price is $7.00. 
+d. If the user is less than 10 years old, the price is $5.00. 
+e. For everyone else, the price is $9.50.
+5. Create an HTML form that takes a number from the user. Also, create a servlet that 
+forwards the control to a JSP page according to the user input. When user enters 1 it 
+should display AboutUs.jsp. When user enters 2, ContactUs.jsp should display. 
+Otherwise, error.jsp should display.
+
+
+
+JSP – Day 2
+6. Create a form to accept product details and store in a Collection. If the product is 
+already inserted, display the appropriate message to insert another product. If the 
+product is inserted, show all the products available in the JSP page using:
+a. Scriptlets
+b. Java Bean
+c. Expression Language
+d. JSTL tags
+➔ Document the difference between all 4 mechanisms.
+7. The Loan Application created on Servlet – Day 3, implement MVC architecture in the 
+same and add the below mentioned functionalities.
+a. Implement Validations as mentioned below:
+Field Validation
+Applicant Name Required field with only alphabets
+Applicant email id Required field with email Validation
+Loan Tenure Required field and value must not be negative or 0.
+Organization Name Contains only alphabets
+NSBT
+JSP Day 1 ASSIGNMENT
+2 | P a g e
+Designation Contains only alphabets
+Monthly Salary value must not be negative or 0.
+If the validations are not correct, the control is redirected to Error Page.
+b. Provide a functionality to check Loan Status by entering the 
+LoanApplicationNumber. The application will check the loan status for the 
+given LoanApplicationNumber and return the corresponding status as either 
+‘Approved’, ‘Rejected’ or ‘Pending’. 
+c. In the above application, if the LoanApplicationNumber entered doesn’t 
+exist, it throws a ApplicationNumberIncorrectException. The exception is 
+handled by the Mapped ErrorServlet. 
+
+
