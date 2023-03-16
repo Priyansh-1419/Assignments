@@ -41,8 +41,8 @@ Applicant email id Required field with email Validation
 Loan Tenure Required field and value must not be negative or 0.
 Organization Name Contains only alphabets
 NSBT
-JSP Day 1 ASSIGNMENT
-2 | P a g e
+
+
 Designation Contains only alphabets
 Monthly Salary value must not be negative or 0.
 If the validations are not correct, the control is redirected to Error Page.
@@ -425,6 +425,176 @@ public class PageSelectorServlet extends HttpServlet {
 
 
 
+
+
+
+
+JSP 2
+
+
+
+<%@ page import="java.util.*" %>
+<%@ page import="com.example.Product" %>
+
+<%
+    List<Product> products = (List<Product>) request.getAttribute("products");
+
+    if (products == null) {
+        products = new ArrayList<Product>();
+        request.setAttribute("products", products);
+    }
+
+    String name = request.getParameter("name");
+    String description = request.getParameter("description");
+    double price = Double.parseDouble(request.getParameter("price"));
+
+    boolean productExists = false;
+
+    for (Product p : products) {
+        if (p.getName().equals(name)) {
+            productExists = true;
+            break;
+        }
+    }
+
+    if (productExists) {
+%>
+        <p>Product already exists. Please insert another product.</p>
+<%
+    } else {
+        Product product = new Product(name, description, price);
+        products.add(product);
+    }
+%>
+
+<form method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" step="0.01" min="0" required><br>
+
+    <button type="submit">Insert</button>
+</form>
+
+
+
+
+<jsp:useBean id="productList" class="com.example.ProductList" scope="request" />
+
+<c:forEach items="${productList.products}" var="p">
+    <p>Name: ${p.name}</p>
+    <p>Description: ${p.description}</p>
+    <p>Price: ${p.price}</p>
+</c:forEach>
+
+
+
+
+
+
+
+
+
+
+<%@ page import="java.util.*" %>
+<%@ page import="com.example.Product" %>
+
+<%
+    List<Product> products = (List<Product>) request.getAttribute("products");
+
+    if (products == null) {
+        products = new ArrayList<Product>();
+        request.setAttribute("products", products);
+    }
+
+    String name = request.getParameter("name");
+    String description = request.getParameter("description");
+    double price = Double.parseDouble(request.getParameter("price"));
+
+    boolean productExists = false;
+
+    for (Product p : products) {
+        if (p.getName().equals(name)) {
+            productExists = true;
+            break;
+        }
+    }
+
+    if (productExists) {
+%>
+        <p>Product already exists. Please insert another product.</p>
+<%
+    } else {
+        Product product = new Product(name, description, price);
+        products.add(product);
+    }
+%>
+
+<form method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" step="0.01" min="0" required><br>
+
+    <button type="submit">Insert</button>
+</form>
+
+
+scriplet
+
+<%
+    List<Product> products = (List<Product>) request.getAttribute("products");
+
+    for (Product p : products) {
+%>
+        <p>Name: <%= p.getName() %></p>
+        <p>Description: <%= p.getDescription() %></p>
+        <p>Price: <%= p.getPrice() %></p>
+<%
+    }
+%>
+
+
+
+
+javabean
+
+package com.example;
+
+import java.util.List;
+
+public class ProductList {
+    private List<Product> products;
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+}
+
+
+
+
+jsp page
+
+<jsp:useBean id="productList" class="com.example.ProductList" scope="request" />
+
+<c:forEach items="${productList.products}" var="p">
+    <p>Name: ${p.name}</p>
+    <p>Description: ${p.description}</p>
+    <p>Price: ${p.price}</p>
+</c:forEach>
 
 
 
