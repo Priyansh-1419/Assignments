@@ -209,4 +209,101 @@ public class LoginServlet extends HttpServlet {
 
 
 
+@WebServlet("/redirect")
+public class RedirectServlet extends HttpServlet {
+  
+  private static final String BANK_URL = "https://bank.example.com/payment";
+  
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    
+    // Set the response content type to HTML
+    response.setContentType("text/html");
+    
+    // Get the explanation message from the query parameter
+    String message = request.getParameter("message");
+    if (message == null || message.isEmpty()) {
+      message = "You are being redirected to the bank website for payment.";
+    }
+    
+    // Write the explanation message to the response
+    PrintWriter out = response.getWriter();
+    out.println("<html><body>");
+    out.println("<h2>" + message + "</h2>");
+    out.println("</body></html>");
+    
+    // Send a redirect response to the bank URL
+    response.sendRedirect(BANK_URL);
+  }
+}
+
+
+
+
+@WebServlet("/config")
+public class ConfigServlet extends HttpServlet {
+  
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    
+    // Get the servlet config object
+    ServletConfig config = getServletConfig();
+    
+    // Get the values of the init parameters from the servlet config
+    String message = config.getInitParameter("message");
+    String author = config.getInitParameter("author");
+    
+    // Write the init parameter values to the response
+    PrintWriter out = response.getWriter();
+    out.println("<html><body>");
+    out.println("<h2>Servlet Config Parameters</h2>");
+    out.println("<p>Message: " + message + "</p>");
+    out.println("<p>Author: " + author + "</p>");
+    out.println("</body></html>");
+  }
+}
+
+
+
+
+
+
+@WebServlet("/context")
+public class ContextServlet extends HttpServlet {
+  
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    
+    // Get the servlet context object
+    ServletContext context = getServletContext();
+    
+    // Get the values of the context parameters from the servlet context
+    String company = context.getInitParameter("company");
+    String location = context.getInitParameter("location");
+    
+    // Write the context parameter values to the response
+    PrintWriter out = response.getWriter();
+    out.println("<html><body>");
+    out.println("<h2>Servlet Context Parameters</h2>");
+    out.println("<p>Company: " + company + "</p>");
+    out.println("<p>Location: " + location + "</p>");
+    out.println("</body></html>");
+  }
+}
+
+
+
+<web-app>
+  ...
+  <error-page>
+    <error-code>404</error-code>
+    <location>/underconstruction.html</location>
+  </error-page>
+</web-app>
+
+
+
 
