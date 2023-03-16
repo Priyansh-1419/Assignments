@@ -115,3 +115,56 @@ The init() method initializes the userCredentials HashMap with some dummy userna
 
 
 
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+  
+  private static final String USERNAME = "admin";
+  private static final String PASSWORD = "password";
+  
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    
+    if (username.equals(USERNAME) && password.equals(PASSWORD)) {
+      request.setAttribute("message", "Name/Password Match");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/welcome");
+      dispatcher.forward(request, response);
+    } else {
+      response.sendRedirect("/error.html");
+    }
+  }
+}
+
+@WebServlet("/welcome")
+public class WelcomeServlet extends HttpServlet {
+  
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    String message = (String) request.getAttribute("message");
+    
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<html><body>");
+    out.println("<h2>Welcome " + username + "</h2>");
+    out.println("<p>Password: " + password + "</p>");
+    out.println("<p>Message: " + message + "</p>");
+    out.println("</body></html>");
+  }
+}
+
+
+
+
+
+
+
+
+
