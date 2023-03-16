@@ -22,6 +22,38 @@ should display AboutUs.jsp. When user enters 2, ContactUs.jsp should display.
 Otherwise, error.jsp should display.
 
 
+<%@ page language="java" %>
+<html>
+<head>
+<title>Factorial Table</title>
+</head>
+<body>
+<h2>Factorial Table</h2>
+<%
+// Get the value of n from the request parameter "n"
+int n = Integer.parseInt(request.getParameter("n"));
+
+// Print the table header
+out.println("<table border='1'>");
+out.println("<tr><th>Number</th><th>Factorial</th></tr>");
+
+// Calculate and print the factorials for each number from 1 to n
+for (int i = 1; i <= n; i++) {
+    int factorial = 1;
+    for (int j = 1; j <= i; j++) {
+        factorial *= j;
+    }
+    out.println("<tr><td>" + i + "</td><td>" + factorial + "</td></tr>");
+}
+
+// Print the table footer
+out.println("</table>");
+%>
+</body>
+</html>
+
+
+
 
 JSP – Day 2
 6. Create a form to accept product details and store in a Collection. If the product is 
