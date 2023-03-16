@@ -55,3 +55,94 @@ exist, it throws a ApplicationNumberIncorrectException. The exception is
 handled by the Mapped ErrorServlet. 
 
 
+
+
+<%@ page language="java" %>
+
+<%
+   int sum(int num1, int num2) {
+      return num1 + num2;
+   }
+%>
+
+<html>
+<head>
+<title>Sum of Two Integers</title>
+</head>
+<body>
+
+<%
+   int num1 = 10;
+   int num2 = 20;
+   int result = sum(num1, num2);
+%>
+
+<p> The sum of <%= num1 %> and <%= num2 %> is <%= result %> </p>
+
+</body>
+</html>
+
+
+
+
+
+<%@ page language="java" %>
+
+<%
+
+   int sum(int num1, int num2) {
+
+      return num1 + num2;
+
+   }
+
+%>
+
+<html>
+
+<head>
+
+<title>Invoke Method from Template Text</title>
+
+</head>
+
+<body>
+
+Sum of 3 and 4 is <%= sum(3,4) %>
+
+</body>
+
+</html>
+
+
+
+
+
+<%@ page language="java" %>
+
+<%
+   int sum(int num1, int num2) {
+      return num1 + num2;
+   }
+%>
+
+<html>
+<head>
+<title>Print to Console using JSP Elements</title>
+</head>
+<body>
+
+<%
+   int num1 = 3;
+   int num2 = 4;
+   int result = sum(num1,num2);
+   System.out.println("Sum of " + num1 + " and " + num2 + " is " + result);
+%>
+
+Sum of <%= num1 %> and <%= num2 %> is <%= result %>
+
+</body>
+</html>
+
+
+
