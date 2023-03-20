@@ -1,0 +1,93 @@
+Create a RESTful web service to fetch details of all the loans by a particular customer by providing the customerld. The details should be of all loans - active and closed.
+Create loan class and DAO using Oracle Database connection to fetch detail of all loans of particular customer by providing customer ID in java. 
+Create a RestFul web services in java completely with full code
+
+Here's an example code of a RESTful web service that fetches details of all loans by a particular customer by providing the customer ID, using a Loan class and LoanDAO with an Oracle Database connection:
+
+Loan.java:
+
+csharp
+Copy code
+public class Loan {
+    private int id;
+    private int customerId;
+    private double amount;
+    private double interestRate;
+    private String status;
+
+    public Loan(int id, int customerId, double amount, double interestRate, String status) {
+        this.id = id;
+        this.customerId = customerId;
+        this.amount = amount;
+        this.interestRate = interestRate;
+        this.status = status;
+    }
+
+    // getters and setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public int getCustomerId() { return customerId; }
+    public void setCustomerId(int customerId) { this.customerId = customerId; }
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
+    public double getInterestRate() { return interestRate; }
+    public void setInterestRate(double interestRate) { this.interestRate = interestRate; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+}
+LoanDAO.java:
+
+java
+Copy code
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LoanDAO {
+    private Connection connection;
+
+    public LoanDAO() throws SQLException {
+        this.connection = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/orclpdb1", "username", "password");
+    }
+
+    public List<Loan> getAllLoansByCustomerId(int customerId) throws SQLException {
+        List<Loan> loans = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM loans WHERE customer_id = ?");
+        statement.setInt(1, customerId);
+        ResultSet result = statement.executeQuery();
+        while (result.next()) {
+            loans.add(new Loan(result.getInt("id"), result.getInt("customer_id"), result.getDouble("amount"), result.getDouble("interest_rate"), result.getString("status")));
+        }
+        return loans;
+    }
+}
+LoanService.java:
+
+java
+Copy code
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
+import java.util.List;
+
+@RestController
+@RequestMapping("/loans")
+public class LoanService {
+    private LoanDAO loanDAO;
+
+    public LoanService() throws SQLException {
+        this.loanDAO = new LoanDAO();
+    }
+
+    @GetMapping("/{customerId}")
+    public List<Loan> getLoansByCustomerId(@PathVariable int customerId) throws SQLException {
+        return loanDAO.getAllLoansByCustomerId(customerId);
+    }
+}
+
+
+
+
+
+
+
