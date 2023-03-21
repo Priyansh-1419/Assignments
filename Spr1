@@ -172,3 +172,69 @@ When we run the test() method, we can see that the count field of the SingletonD
 
 This is the difference between the singleton and prototype scopes. In the singleton scope, the same instance is shared across all classes that require it, whereas in the prototype scope, a new instance is created every time it is requested.
 
+
+
+
+
+public class MySingletonBean {
+   private int count = 0;
+   
+   public int getCount() {
+      return ++count;
+   }
+}
+
+public class MyPrototypeBean {
+   private int count = 0;
+   
+   public int getCount() {
+      return ++count;
+   }
+}
+
+
+<bean id="myPrototypeBean" class="com.example.MyPrototypeBean" scope="prototype">
+   <!-- Bean properties -->
+</bean>
+
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+   <bean id="mySingletonBean" class="com.example.MySingletonBean" scope="singleton"/>
+   
+   <bean id="myPrototypeBean" class="com.example.MyPrototypeBean" scope="prototype"/>
+   
+</beans>
+
+
+
+
+
+public class TestBean {
+
+   public static void main(String[] args) {
+      ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+      
+      // Get singleton bean
+      MySingletonBean singletonBean1 = (MySingletonBean) context.getBean("mySingletonBean");
+      MySingletonBean singletonBean2 = (MySingletonBean) context.getBean("mySingletonBean");
+      
+      // Increment count on singleton bean
+      System.out.println(singletonBean1.getCount()); // Output: 1
+      System.out.println(singletonBean2.getCount()); // Output: 2
+      
+      // Get prototype bean
+      MyPrototypeBean prototypeBean1 = (MyPrototypeBean) context.getBean("myPrototypeBean");
+      MyPrototypeBean prototypeBean2 = (MyPrototypeBean) context.getBean("myPrototypeBean");
+      
+      // Increment count on prototype bean
+      System.out.println(prototypeBean1.getCount()); // Output: 1
+      System.out.println(prototypeBean2.getCount()); // Output: 1
+   }
+}
+
+
