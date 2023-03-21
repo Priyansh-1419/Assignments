@@ -1,0 +1,47 @@
+package com.rest;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+@Path("/user")
+public class HelloUser {
+
+    @POST
+    @Path("/register")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response registerUserInfo(@FormParam("name") String name,
+                                     @FormParam("address") String address){
+
+        String response = "Successfully added user details, name: "+
+                name+" and address: "+address;
+        return Response.status(200).entity(response).build();
+
+    }
+
+}
+
+html form:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<h1>Input User Details</h1>
+<form action="rest/user/register" method="post">
+  <p>Name : <input type="text" name="name" /></p>
+  <p>Address : <input type="text" name="address" /></p>
+  <input type="submit" value="Enter Details" />
+</form>
+</body>
+</html>
+
+
+index.jsp
+
+<h2>Jersey RESTful Web Application!</h2>
+    <p>
+    <a href="FormRst.html">Click Here for Form Param</a>
