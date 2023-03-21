@@ -1,0 +1,91 @@
+public class Customer {
+    private int customerId;
+    private String customerName;
+    private double monthlyIncome;
+    private String profession;
+    private String designation;
+    private String companyName;
+
+    public Customer() {}
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setMonthlyIncome(double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", monthlyIncome="
+                + monthlyIncome + ", profession=" + profession + ", designation=" + designation + ", companyName="
+                + companyName + "]";
+    }
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+    <!-- Define Customer bean -->
+    <bean id="customer" class="com.example.Customer">
+        <!-- Dependency injection via setter methods -->
+        <property name="customerId" value="1" />
+        <property name="customerName" value="John Doe" />
+        <property name="monthlyIncome" value="5000.0" />
+        <property name="profession" value="Software Engineer" />
+        <property name="designation" value="Senior Developer" />
+        <property name="companyName" value="ABC Company" />
+    </bean>
+    
+</beans>
+
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+    public static void main(String[] args) {
+        // Load Spring Container
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        
+        // Get Customer bean from Spring Container
+        Customer customer = (Customer) context.getBean("customer");
+        
+        // Print Customer details
+        System.out.println(customer);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
