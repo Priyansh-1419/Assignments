@@ -80,8 +80,43 @@ public class Main {
 
 
 
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Bean definition for Customer -->
+    <bean id="customerBean" class="Customer">
+        <!-- Constructor injection using index -->
+        <constructor-arg index="0" value="123"/>
+        <constructor-arg index="1" value="John Doe"/>
+        <constructor-arg index="2" value="5000.0"/>
+        <constructor-arg index="3" value="Engineer"/>
+        <constructor-arg index="4" value="Manager"/>
+        <constructor-arg index="5" value="Acme Corporation"/>
+    </bean>
+
+</beans>
 
 
+
+
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+    public static void main(String[] args) {
+        // Load the Spring configuration file
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        // Retrieve the Customer bean from the Spring container
+        Customer customer = (Customer) context.getBean("customerBean");
+
+        // Use the Customer object
+        System.out.println(customer.getCustomerName() + " works as a " + customer.getProfession() + " at " + customer.getCompanyName());
+    }
+}
 
 
 
