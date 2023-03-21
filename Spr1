@@ -123,4 +123,52 @@ public class Main {
 
 
 
+@Component
+@Scope("singleton")
+public class SingletonDemo {
+
+   private int count = 0;
+   
+   public int getCount() {
+      return ++count;
+   }
+}
+
+@Component
+@Scope("prototype")
+public class PrototypeDemo {
+
+   private int count = 0;
+   
+   public int getCount() {
+      return ++count;
+   }
+}
+
+
+
+@Component
+public class TestBean {
+
+   @Autowired
+   private SingletonDemo singletonDemo;
+   
+   @Autowired
+   private PrototypeDemo prototypeDemo;
+   
+   public void test() {
+      // Increment count on SingletonDemo bean
+      System.out.println(singletonDemo.getCount()); // Output: 1
+      System.out.println(singletonDemo.getCount()); // Output: 2
+      
+      // Increment count on PrototypeDemo bean
+      System.out.println(prototypeDemo.getCount()); // Output: 1
+      System.out.println(prototypeDemo.getCount()); // Output: 1
+   }
+}
+
+
+When we run the test() method, we can see that the count field of the SingletonDemo bean gets incremented every time the getCount() method is called, whereas the count field of the PrototypeDemo bean gets reset to zero every time a new instance is created.
+
+This is the difference between the singleton and prototype scopes. In the singleton scope, the same instance is shared across all classes that require it, whereas in the prototype scope, a new instance is created every time it is requested.
 
