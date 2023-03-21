@@ -238,3 +238,58 @@ public class TestBean {
 }
 
 
+
+
+public class Customer {
+    private int id;
+    private String name;
+    private String address;
+    private List<String> phoneNumbers;
+    private Set<String> emailAdressSet;
+
+    public Customer(int id, String name, String address, List<String> phoneNumbers) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public void setEmailAdressSet(Set<String> emailAdressSet) {
+        this.emailAdressSet = emailAdressSet;
+    }
+
+    // getters and setters
+    // ...
+
+    @Override
+    public String toString() {
+        return "Customer [id=" + id + ", name=" + name + ", address=" + address
+                + ", phoneNumbers=" + phoneNumbers + ", emailAdressSet=" + emailAdressSet + "]";
+    }
+}
+
+
+
+
+<bean id="customer" class="com.example.Customer">
+    <constructor-arg name="id" value="123" />
+    <constructor-arg name="name" value="John Doe" />
+    <constructor-arg name="address" value="123 Main St" />
+    <constructor-arg name="phoneNumbers">
+        <list>
+            <value>555-1234</value>
+            <value>555-5678</value>
+        </list>
+    </constructor-arg>
+    <property name="emailAdressSet">
+        <set>
+            <value>john.doe@example.com</value>
+            <value>johndoe@gmail.com</value>
+        </set>
+    </property>
+</bean>
+
+
+
+
+
