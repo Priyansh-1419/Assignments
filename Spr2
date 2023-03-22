@@ -1,0 +1,60 @@
+import java.util.List;
+import java.util.Set;
+
+public class Customer {
+    private String firstName;
+    private String lastName;
+    private List<String> phoneNumbers;
+    private Set<String> emailAddressSet;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumbers(List<String> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public void setEmailAddressSet(Set<String> emailAddressSet) {
+        this.emailAddressSet = emailAddressSet;
+    }
+
+    public void init() {
+        for (int i = 0; i < phoneNumbers.size(); i++) {
+            String phoneNumber = phoneNumbers.get(i);
+            if (!phoneNumber.startsWith("+91")) {
+                phoneNumbers.set(i, "+91" + phoneNumber);
+            }
+        }
+    }
+
+    public void destroy() {
+        phoneNumbers.clear();
+        emailAddressSet.clear();
+    }
+}
+
+
+<bean id="customer" class="com.example.Customer" init-method="init" destroy-method="destroy">
+    <property name="firstName" value="John"/>
+    <property name="lastName" value="Doe"/>
+    <property name="phoneNumbers">
+        <list>
+            <value>1234567890</value>
+            <value>+919876543210</value>
+        </list>
+    </property>
+    <property name="emailAddressSet">
+        <set>
+            <value>john.doe@example.com</value>
+            <value>johndoe@gmail.com</value>
+        </set>
+    </property>
+</bean>
+
+
+
