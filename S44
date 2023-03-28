@@ -1,0 +1,103 @@
+public class BeanCalculator {
+
+    public int add(int num1, int num2) {
+        return num1 + num2;
+    }
+
+    public double add(double num1, double num2) {
+        return num1 + num2;
+    }
+
+    public String add(String str1, String str2) {
+        return str1 + str2;
+    }
+
+    public int subtract(int num1, int num2) {
+        return num1 - num2;
+    }
+
+    public double subtract(double num1, double num2) {
+        return num1 - num2;
+    }
+
+    public int multiply(int num1, int num2) {
+        return num1 * num2;
+    }
+
+    public double multiply(double num1, double num2) {
+        return num1 * num2;
+    }
+
+    public int divide(int num1, int num2) throws ArithmeticException {
+        if(num2 == 0) {
+            throw new ArithmeticException("Division by zero not possible");
+        }
+        return num1 / num2;
+    }
+
+    public double divide(double num1, double num2) {
+        if(num2 == 0) {
+            throw new ArithmeticException("Division by zero not possible");
+        }
+        return num1 / num2;
+    }
+}
+
+
+
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class CalculatorLoggingAspect {
+
+    @Before("execution(* BeanCalculator.subtract(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        System.out.println("Before " + joinPoint.getSignature().getName() + " arguments " + args[0] + ", " + args[1]);
+    }
+
+    @AfterReturning(pointcut = "execution(* BeanCalculator.multiply(..))", returning = "result")
+    public void logAfterReturning(JoinPoint joinPoint, Object result) {
+        Object[] args = joinPoint.getArgs();
+        System.out.println("After " + joinPoint.getSignature().getName() + " arguments " + args[0] + ", " + args[1] + " result is " + result);
+    }
+
+    @AfterThrowing(pointcut = "execution(* BeanCalculator.divide(..))", throwing = "ex")
+    public void logAfterThrowing(JoinPoint joinPoint, Exception ex) {
+        Object[] args = joinPoint.getArgs();
+        System.out.println("Exception in " + joinPoint.getSignature().getName() + " arguments " + args[0] + ", " + args[1] + " exception is " + ex.getMessage());
+    }
+
+    @After("execution(* BeanCalculator.add(..))")
+    public void logAfter(JoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        System.out.println("After " + joinPoint.getSignature().getName() + " arguments " + args[0] + ", " + args[1]);
+    }
+}
+
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        BeanCalculator calculator = context.getBean("calculator", BeanCalculator.class);
+
+        System.out.println(calculator.add(2, 3));
+        System.out.println(calculator.add(2.5,
+
+
+
+
+
+
