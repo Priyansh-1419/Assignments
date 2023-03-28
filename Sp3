@@ -1,0 +1,143 @@
+public class Address {
+    private int addressId;
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private int zip;
+    
+    @Autowired
+    private ZipCode zipCode;
+    
+    // getters and setters
+}
+
+@Component
+public class ZipCode {
+    private String code;
+    
+    // getters and setters
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        
+        Address address = context.getBean(Address.class);
+        
+        System.out.println("Address: " + address.getAddressLine1() + ", " + address.getAddressLine2() + ", " + address.getCity() + ", " + address.getState() + " " + address.getZip() + " (" + address.getZipCode().getCode() + ")");
+    }
+}
+
+@Configuration
+@ComponentScan(basePackages = "com.example")
+public class AppConfig {
+    
+}
+
+
+
+
+
+
+
+
+@Configuration
+@ComponentScan(basePackages = "com.example")
+public class AppConfig {
+    
+}
+
+@Component
+public class MyComponent {
+    // This is a generic component that can be used in the application.
+    // It is automatically detected by Spring because of the @Component annotation.
+}
+
+@Service
+public class MyService {
+    // This is a service component that provides business logic for the application.
+    // It is annotated with @Service to indicate its role as a service component.
+}
+
+@Repository
+public class MyRepository {
+    // This is a repository component that provides data access for the application.
+    // It is annotated with @Repository to indicate its role as a repository component.
+}
+
+
+
+
+
+
+
+
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Address {
+    private int addressId;
+    private String addressLine1;
+    private String addressLine2;
+    
+    @Autowired
+    private CityService cityService;
+    
+    private String state;
+    private int zip;
+    
+    public Address() {
+        
+    }
+    
+    public Address(int addressId, String addressLine1, String addressLine2, String state, int zip) {
+        this.addressId = addressId;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.state = state;
+        this.zip = zip;
+    }
+    
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
+    }
+    
+    public void displayAddress() {
+        String city = cityService.getCityName();
+        System.out.println(addressLine1 + ", " + addressLine2 + ", " + city + ", " + state + " - " + zip);
+    }
+}
+
+
+
+
+package com.example.demo;
+
+public class CityService {
+    public String getCityName() {
+        return "New York City";
+    }
+}
+
+
+
+
+package com.example.demo;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class Main {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        
+        Address address = context.getBean(Address.class);
+        address.displayAddress();
+        
+        context.close();
+    }
+}
+
+
+
