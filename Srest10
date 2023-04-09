@@ -1,0 +1,63 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.regex.Pattern;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class EmployeeController {
+    
+    @PostMapping("/employee")
+    public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
+        // Validate Emp Name
+        if (!isAlphabet(employee.getEmpName())) {
+            return new ResponseEntity<>("Emp Name must contain only alphabets.", HttpStatus.BAD_REQUEST);
+        }
+        
+        // Validate Date of Joining
+        try {
+            LocalDate.parse(employee.getDoj());
+        } catch (DateTimeParseException e) {
+            return new ResponseEntity<>("Invalid Date of Joining format. Please use DD/MM/YYYY.", HttpStatus.BAD_REQUEST);
+        }
+        
+        // Validate Email
+        if (!isValidEmail(employee.getEmail())) {
+            return new ResponseEntity<>("Invalid Email format.", HttpStatus.BAD_REQUEST);
+        }
+        
+        // Validate Contact Number
+        if (!isValidContactNumber(employee.getContactNumber())) {
+            return new ResponseEntity<>("Contact Number must be 10 digits.", HttpStatus.BAD_REQUEST);
+        }
+        
+        // If all validations pass, create the employee object and return success response
+        Employee emp = new Employee(employee.getEmpId(), employee.getEmpName(), employee.getDoj(), employee.getEmail(), employee.getContactNumber());
+        return new ResponseEntity<>("Employee created successfully.", HttpStatus.CREATED);
+    }
+    
+    private boolean isAlphabet(String input) {
+        if (input == null) {
+            return false;
+        }
+        return Pattern.matches("[a-zA-Z]+", input);
+    }
+    
+    private boolean isValidEmail(String input) {
+        if (input == null) {
+            return false;
+        }
+        return Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", input);
+    }
+    
+    private boolean isValidContactNumber(String input) {
+        if (input == null) {
+            return false;
+        }
+        return Pattern.matches("\\d{10}", input);
+    }
+}
