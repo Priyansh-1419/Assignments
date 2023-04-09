@@ -1,0 +1,157 @@
+import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int customerId;
+    private String customerName;
+    private LocalDate dateOfBirth;
+    private double monthlyIncome;
+    private String profession;
+    private String designation;
+    private String companyName;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public double getMonthlyIncome() {
+        return monthlyIncome;
+    }
+
+    public void setMonthlyIncome(double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+}
+
+
+
+
+import java.time.LocalDate;
+import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = factory.getCurrentSession();
+
+        try {
+            session.beginTransaction();
+
+            // Insert operation
+            Customer customer1 = new Customer();
+            customer1.setCustomerName("John Doe");
+            customer1.setDateOfBirth(LocalDate.of(1990, 1, 1));
+            customer1.setMonthlyIncome(5000.0);
+            customer1.setProfession("Engineer");
+            customer1.setDesignation("Manager");
+            customer1.setCompanyName("ABC Company");
+            session.save(customer1);
+
+            // Update operation
+            Customer customer2 = session.get(Customer.class, 1);
+            customer2.setMonthlyIncome(6000.0);
+            session.update(customer2);
+
+            // Delete operation
+            Customer customer3 = session.get(Customer.class, 2);
+            session.delete(customer3);
+
+            // Select operation
+            Customer customer4 = session.get(Customer.class, 1);
+            System.out.println(customer4.getCustomerId() + " " + customer4.getCustomerName() + " " +
+                    customer4.getDateOfBirth() + " " + customer4.getMonthlyIncome() + " " +
+                    customer4.getProfession() + " " + customer4.getDesignation() + " " +
+                    customer4.getCompanyName());
+
+            // List all customers
+            Query<Customer> query1 = session.createQuery("from Customer", Customer.class);
+            List<Customer> customers1 = query1.getResultList();
+            for (Customer customer : customers1) {
+                System.out.println(customer.getCustomerId() + " " + customer.getCustomerName() + " " +
+                        customer.getDateOfBirth() + " " + customer.getMonthlyIncome() + " " +
+                        customer.getProfession() + " " + customer.getDesignation() + " " +
+                        customer.getCompanyName());
+            }
+
+            // List customers with same designation and company
+            Query<Customer> query2 = session.createQuery("from Customer where designation=:designation and companyName=:companyName", Customer.class);
+            query2.setParameter("designation", "Manager");
+            query2.setParameter("companyName", "ABC Company");
+            List<Customer> customers2 = query2.getResultList();
+            for (Customer customer : customers2) {
+                System.out.println(customer.getCustomerId() + " " + customer.getCustomerName() + " " +
+                        customer.getDateOfBirth() + " " + customer.getMonthlyIncome() + " " +
+                        customer.getProfession() + " " + customer.getDesignation() + " " +
+                        customer.getCompanyName());
+            }
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+            factory.close();
+        }
+    }
+
+}
+
