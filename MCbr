@@ -1,0 +1,121 @@
+@Controller
+public class LoginController {
+
+  @Autowired
+  private UserService userService;
+
+  @GetMapping("/login")
+  public String showLoginPage(Model model) {
+    model.addAttribute("user", new User());
+    return "login";
+  }
+
+  @PostMapping("/login")
+  public String login(@ModelAttribute("user") User user, HttpSession session) {
+    User authenticatedUser = userService.authenticate(user.getUsername(), user.getPassword());
+    if (authenticatedUser != null) {
+      session.setAttribute("user", authenticatedUser);
+      return "redirect:/home";
+    } else {
+      return "redirect:/login?error=1";
+    }
+  }
+}
+
+
+
+
+@Service
+public class UserService {
+
+  @Autowired
+  private UserDao userDao;
+
+  public User authenticate(String username, String password) {
+    User user = userDao.findByUsername(username);
+    if (user != null) {
+      String encryptedPassword = encrypt(password);
+      if (encryptedPassword.equals(user.getPassword())) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+  private String encrypt(String password) {
+    // use DES 3 algorithm to encrypt password
+    return "encrypted_password";
+  }
+}
+
+
+
+
+
+@Repository
+public class UserDaoImpl implements UserDao {
+
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
+
+  @Override
+  public User findByUsername(String username) {
+    String query = "SELECT * FROM users WHERE username = ?";
+    RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+    List<User> users = jdbcTemplate.query(query, mapper, username);
+    return users.isEmpty() ? null : users.get(0);
+  }
+
+  @Override
+  public void save(User user) {
+    String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    jdbcTemplate.update(query, user.getUsername(), user.getPassword());
+  }
+}
+
+
+
+
+
+
+@Controller
+public class UserController {
+
+  @Autowired
+  private UserService userService;
+
+  @GetMapping("/register")
+  public String showRegistrationPage(Model model) {
+    model.addAttribute("user", new User());
+    return "register";
+  }
+
+  @PostMapping("/register")
+  public String register(@ModelAttribute("user") User user) {
+    String encryptedPassword = userService.encrypt(user.getPassword());
+    user.setPassword(encryptedPassword);
+    userService.save(user);
+    return "redirect:/login";
+  }
+}
+
+
+
+
+public class User {
+
+  private int id;
+  private String username;
+  private String password;
+
+  // getters and setters
+}
+
+
+
+
+
+
+
+
+
