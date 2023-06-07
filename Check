@@ -1,0 +1,86 @@
+import java.sql.*;
+
+class FactoryDAO {
+    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+    private static final String DB_USER = "your_username";
+    private static final String DB_PASSWORD = "your_password";
+
+    public void createTables() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement stmt = conn.createStatement()) {
+            // Create the Factory table
+            String factoryTableSql = "CREATE TABLE Factory (" +
+                    "factoryName VARCHAR2(50) PRIMARY KEY)";
+            stmt.executeUpdate(factoryTableSql);
+
+            // Create the RawMaterial table
+            String rawMaterialTableSql = "CREATE TABLE RawMaterial (" +
+                    "name VARCHAR2(50) PRIMARY KEY, " +
+                    "ratePerUnit NUMBER)";
+            stmt.executeUpdate(rawMaterialTableSql);
+
+            // Create the Product table
+            String productTableSql = "CREATE TABLE Product (" +
+                    "productName VARCHAR2(50) PRIMARY KEY, " +
+                    "productPrice NUMBER, " +
+                    "productQuantity NUMBER)";
+            stmt.executeUpdate(productTableSql);
+
+            System.out.println("Tables created successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertFactory(Factory factory) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Factory (factoryName) VALUES (?)")) {
+            stmt.setString(1, factory.getFactoryName());
+            stmt.executeUpdate();
+
+            System.out.println("Factory inserted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertRawMaterial(RawMaterial rawMaterial) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO RawMaterial (name, ratePerUnit) VALUES (?, ?)")) {
+            stmt.setString(1, rawMaterial.getName());
+            stmt.setDouble(2, rawMaterial.getRatePerUnit());
+            stmt.executeUpdate();
+
+            System.out.println("RawMaterial inserted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertProduct(Product product) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Product (productName, productPrice, productQuantity) VALUES (?, ?, ?)")) {
+            stmt.setString(1, product.getProductName());
+            stmt.setDouble(2, product.getProductPrice());
+            stmt.setInt(3, product.getProductQuantity());
+            stmt.executeUpdate();
+
+            System.out.println("Product inserted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void linkFactoryProduct(String factoryName, String productName) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Factory_Products (factoryName, productName) VALUES (?, ?)")) {
+            stmt.setString(1, factoryName);
+            stmt.setString(2, productName);
+            stmt.executeUpdate();
+
+            System.out.println("Factory-Product link created successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
