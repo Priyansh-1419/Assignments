@@ -1,0 +1,37 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Login {
+    private Map<String, String> users;
+
+    public Login() {
+        users = new HashMap<>();
+        // Populate the users map with username-password pairs
+        users.put("departmenthead", "password1");
+        users.put("faculty", "password2");
+        users.put("student", "password3");
+        users.put("admin", "password4");
+    }
+
+    public User authenticateUser(String username, String password) {
+        String storedPassword = users.get(username);
+        if (storedPassword != null && storedPassword.equals(password)) {
+            UserRole role = determineUserRole(username);
+            return new User(username, role);
+        }
+        return null;
+    }
+
+    private UserRole determineUserRole(String username) {
+        if (username.equals("departmenthead")) {
+            return UserRole.DEPARTMENT_HEAD;
+        } else if (username.equals("faculty")) {
+            return UserRole.FACULTY;
+        } else if (username.equals("student")) {
+            return UserRole.STUDENT;
+        } else if (username.equals("admin")) {
+            return UserRole.ADMINISTRATIVE_OFFICER;
+        }
+        return UserRole.UNKNOWN;
+    }
+}
