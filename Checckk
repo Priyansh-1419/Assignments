@@ -34,4 +34,135 @@ public class Login {
         }
         return UserRole.UNKNOWN;
     }
+}🤣
+
+
+
+
+
+
+
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Login login = new Login();
+
+        System.out.println("Welcome to the University Management System");
+
+        // User Login
+        System.out.print("Username: ");
+        String username = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        String role = login.authenticateUser(username, password);
+        if (role.isEmpty()) {
+            System.out.println("Invalid credentials. Please try again.");
+            return;
+        }
+
+        System.out.println("Login successful. Welcome, " + role + "!");
+
+        User user = new User(username, role);
+        while (true) {
+            // Display menu based on user role
+            System.out.println("\n----- Menu -----");
+            if (role.equalsIgnoreCase("Department Head")) {
+                System.out.println("1. View List of Faculties, Students, and Courses");
+                System.out.println("2. Appoint a New Faculty");
+                System.out.println("3. Assign Faculty to a Course");
+                System.out.println("4. Enroll Students in a Course");
+                System.out.println("0. Logout");
+            } else if (role.equalsIgnoreCase("Faculty")) {
+                System.out.println("1. View Students in My Course");
+                System.out.println("2. Give Grades to Students");
+                System.out.println("0. Logout");
+            } else if (role.equalsIgnoreCase("Student")) {
+                System.out.println("1. View Course Calendar");
+                System.out.println("2. View Marksheet");
+                System.out.println("0. Logout");
+            } else if (role.equalsIgnoreCase("Administrative Officer")) {
+                System.out.println("1. Add/Delete Department");
+                System.out.println("2. Admit New Students");
+                System.out.println("3. Graduate Students");
+                System.out.println("4. View List of Departments, Faculties, and Students");
+                System.out.println("0. Logout");
+            }
+
+            System.out.print("\nEnter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    if (role.equalsIgnoreCase("Department Head")) {
+                        user.viewFacultyList();
+                        // Logic for viewing list of faculties, students, and courses
+                    } else if (role.equalsIgnoreCase("Faculty")) {
+                        user.viewStudentsInCourse();
+                        // Logic for viewing students in the faculty's course
+                    } else if (role.equalsIgnoreCase("Student")) {
+                        user.viewCourseCalendar();
+                        // Logic for viewing the course calendar
+                    } else if (role.equalsIgnoreCase("Administrative Officer")) {
+                        user.addDepartment();
+                        // Logic for adding a new department
+                    }
+                    break;
+                case 2:
+                    if (role.equalsIgnoreCase("Department Head")) {
+                        user.appointFaculty();
+                        // Logic for appointing a new faculty
+                    } else if (role.equalsIgnoreCase("Faculty")) {
+                        user.giveGradesToStudents();
+                        // Logic for giving grades to students
+                    } else if (role.equalsIgnoreCase("Student")) {
+                        user.viewMarksheet();
+                        // Logic for viewing the marksheet
+                    } else if (role.equalsIgnoreCase("Administrative Officer")) {
+                        user.deleteDepartment();
+                        // Logic for deleting a department
+                    }
+                    break;
+                case 3:
+                    if (role.equalsIgnoreCase("Department Head")) {
+                        user.assignFacultyToCourse();
+                        // Logic for assigning a faculty to a course
+                    } else if (role.equalsIgnoreCase("Faculty")) {
+                        // Additional functionality specific to Faculty
+                    } else if (role.equalsIgnoreCase("Student")) {
+                        // Additional functionality specific to Student
+                    } else if (role.equalsIgnoreCase("Administrative Officer")) {
+                        user.admitNewStudents();
+                        // Logic for admitting new students
+                    }
+                    break;
+                case 4:
+                    if (role.equalsIgnoreCase("Department Head")) {
+                        user.enrollStudentsInCourse();
+                        // Logic for enrolling students in a course
+                    } else if (role.equalsIgnoreCase("Faculty")) {
+                        // Additional functionality specific to Faculty
+                    } else if (role.equalsIgnoreCase("Student")) {
+                        // Additional functionality specific to Student
+                    } else if (role.equalsIgnoreCase("Administrative Officer")) {
+                        user.graduateStudents();
+                        // Logic for graduating students
+                    }
+                    break;
+                case 0:
+                    System.out.println("Logged out. Goodbye!");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
 }
+
+
+
