@@ -38,6 +38,45 @@ public class Training {
     // Getters and setters
 }
 
+
+
+PracticalTraining Class:
+
+
+public class PracticalTraining extends Training {
+    private int labDurationMinutes;
+
+    public PracticalTraining(String trainingId, String courseName, String skillsAcquired,
+                             String startDate, String endDate, int labDurationMinutes) {
+        super(trainingId, courseName, skillsAcquired, startDate, endDate);
+        this.labDurationMinutes = labDurationMinutes;
+    }
+
+    public int getLabDurationMinutes() {
+        return labDurationMinutes;
+    }
+
+    public void setLabDurationMinutes(int labDurationMinutes) {
+        this.labDurationMinutes = labDurationMinutes;
+    }
+}
+
+
+ConceptualTraining Class:
+
+
+
+public class ConceptualTraining extends Training {
+    public ConceptualTraining(String trainingId, String courseName, String skillsAcquired,
+                              String startDate, String endDate) {
+        super(trainingId, courseName, skillsAcquired, startDate, endDate);
+    }
+}
+
+
+
+
+
 Custom Exceptions:
 
 public class EmployeeAlreadyExistsException extends Exception {
