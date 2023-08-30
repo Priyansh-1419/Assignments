@@ -1,0 +1,131 @@
+Employee Class:
+
+public class Employee {
+    private String employeeId;
+    private String employeeName;
+
+    public Employee(String employeeId, String employeeName) {
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+    }
+
+    // Getters and setters
+}
+
+
+
+Training Class:
+
+
+public class Training {
+    private String trainingId;
+    private String courseName;
+    private String skillsAcquired;
+    private String startDate;
+    private String endDate;
+    private int labDurationMinutes;
+
+    public Training(String trainingId, String courseName, String skillsAcquired,
+                    String startDate, String endDate, int labDurationMinutes) {
+        this.trainingId = trainingId;
+        this.courseName = courseName;
+        this.skillsAcquired = skillsAcquired;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.labDurationMinutes = labDurationMinutes;
+    }
+
+    // Getters and setters
+}
+
+Custom Exceptions:
+
+public class EmployeeAlreadyExistsException extends Exception {
+    public EmployeeAlreadyExistsException(String message) {
+        super(message);
+    }
+}
+
+public class TrainingAlreadyExistsException extends Exception {
+    public TrainingAlreadyExistsException(String message) {
+        super(message);
+    }
+}
+
+public class TrainingNotFoundException extends Exception {
+    public TrainingNotFoundException(String message) {
+        super(message);
+    }
+}
+
+
+
+
+Service Layer:
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class TrainingService {
+    private Map<String, Employee> employees = new HashMap<>();
+    private Map<String, Training> trainings = new HashMap<>();
+
+    public void createEmployee(String employeeId, String employeeName) throws EmployeeAlreadyExistsException {
+        if (employees.containsKey(employeeId)) {
+            throw new EmployeeAlreadyExistsException("Employee already exists with ID: " + employeeId);
+        }
+        Employee employee = new Employee(employeeId, employeeName);
+        employees.put(employeeId, employee);
+    }
+
+    public void createTraining(String trainingId, String courseName, String skillsAcquired,
+                                String startDate, String endDate, int labDurationMinutes) throws TrainingAlreadyExistsException {
+        if (trainings.containsKey(trainingId)) {
+            throw new TrainingAlreadyExistsException("Training already exists with ID: " + trainingId);
+        }
+        Training training = new Training(trainingId, courseName, skillsAcquired, startDate, endDate, labDurationMinutes);
+        trainings.put(trainingId, training);
+    }
+
+    public void registerForTraining(String employeeId, String trainingId) throws TrainingNotFoundException {
+        if (!trainings.containsKey(trainingId)) {
+            throw new TrainingNotFoundException("Training not found with ID: " + trainingId);
+        }
+        // Implement the registration logic here
+    }
+
+    // Add other methods as needed
+}
+
+
+
+Main Application:
+
+
+
+public class MainApplication {
+    public static void main(String[] args) {
+        TrainingService trainingService = new TrainingService();
+
+        try {
+            trainingService.createEmployee("E001", "John Doe");
+            trainingService.createTraining("T001", "Java Basics", "Programming Fundamentals",
+                    "2023-09-01", "2023-09-15", 120);
+            trainingService.registerForTraining("E001", "T001");
+        } catch (EmployeeAlreadyExistsException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (TrainingAlreadyExistsException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (TrainingNotFoundException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+
+
+
+
+
+
